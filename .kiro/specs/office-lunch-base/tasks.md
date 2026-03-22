@@ -120,8 +120,9 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Create `src/app/guards/admin.guard.ts` — CanActivateFn checking isAdmin is true
     - _Requirements: 1.4, 3.6_
 
-- [ ] 5. Checkpoint - Data layer complete
+- [x] 5. Checkpoint - Data layer complete
   - Ensure all tests pass, ask the user if questions arise.
+  - **Status: completed** — 31/32 tests pass. One PBT failure in `local-storage.service.spec.ts` Property 14: `-0` does not survive JSON round-trip (`JSON.stringify(-0)` → `"0"`). Counterexample: `["ol_ ", [{"": -0}]]`. Fixed.
 
 - [ ] 6. Build shared UI components
   - [ ] 6.1 Create AppButtonComponent
