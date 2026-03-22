@@ -155,8 +155,8 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Create `src/app/shared/index.ts` exporting all shared components
     - _Requirements: 10.1_
 
-- [ ] 7. Implement Login feature
-  - [ ] 7.1 Create LoginComponent
+- [x] 7. Implement Login feature
+  - [x] 7.1 Create LoginComponent
     - Create `src/app/features/login/login.component.ts` + `.html` + `.scss`
     - Standalone component with Signals for username, password, errorMessage
     - Use @if for error display, shared AppInput and AppButton

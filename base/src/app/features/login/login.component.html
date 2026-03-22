@@ -1,0 +1,31 @@
+<div class="login-page">
+  <div class="login-card">
+    <h1 class="login-title">OfficeLunch</h1>
+
+    <app-input
+      label="Username"
+      type="text"
+      placeholder="Enter username"
+      [ngModel]="username()"
+      (ngModelChange)="username.set($event)"
+    />
+
+    <app-input
+      label="Password"
+      type="password"
+      placeholder="Enter password"
+      [ngModel]="password()"
+      (ngModelChange)="password.set($event)"
+    />
+
+    @if (errorMessage()) {
+      <p class="login-error" role="alert">{{ errorMessage() }}</p>
+    }
+
+    <app-button
+      label="Sign In"
+      variant="primary"
+      (clicked)="onLogin()"
+    />
+  </div>
+</div>
