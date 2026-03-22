@@ -124,34 +124,34 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
   - Ensure all tests pass, ask the user if questions arise.
   - **Status: completed** — 31/32 tests pass. One PBT failure in `local-storage.service.spec.ts` Property 14: `-0` does not survive JSON round-trip (`JSON.stringify(-0)` → `"0"`). Counterexample: `["ol_ ", [{"": -0}]]`. Fixed.
 
-- [ ] 6. Build shared UI components
-  - [ ] 6.1 Create AppButtonComponent
+- [x] 6. Build shared UI components
+  - [x] 6.1 Create AppButtonComponent
     - Create `src/app/shared/components/button/` with component, SCSS, and spec
     - Inputs: label, variant ('primary'|'secondary'|'danger'), disabled
     - Output: clicked event
     - Minimalistic flat style using shared SCSS mixins
     - _Requirements: 10.1, 10.3_
-  - [ ] 6.2 Create AppInputComponent
+  - [x] 6.2 Create AppInputComponent
     - Create `src/app/shared/components/input/` with component, SCSS, and spec
     - Inputs: label, type, placeholder; two-way binding support
     - _Requirements: 10.1, 10.3_
-  - [ ] 6.3 Create AppCardComponent
+  - [x] 6.3 Create AppCardComponent
     - Create `src/app/shared/components/card/` with component, SCSS, and spec
     - Input: title; content projection via ng-content
     - _Requirements: 10.1, 10.3_
-  - [ ] 6.4 Create AppBadgeComponent
+  - [x] 6.4 Create AppBadgeComponent
     - Create `src/app/shared/components/badge/` with component and SCSS
     - Inputs: text, color ('green'|'red'|'gray')
     - _Requirements: 10.1, 10.3_
-  - [ ] 6.5 Create AppModalComponent
+  - [x] 6.5 Create AppModalComponent
     - Create `src/app/shared/components/modal/` with component, SCSS, and spec
     - Inputs: open, title; Output: closed; content projection
     - _Requirements: 10.1, 10.3_
-  - [ ] 6.6 Create AppTableComponent
+  - [x] 6.6 Create AppTableComponent
     - Create `src/app/shared/components/table/` with component, SCSS, and spec
     - Inputs: columns, rows; Output: rowAction
     - _Requirements: 10.1, 10.3_
-  - [ ] 6.7 Create shared barrel export
+  - [x] 6.7 Create shared barrel export
     - Create `src/app/shared/index.ts` exporting all shared components
     - _Requirements: 10.1_
 

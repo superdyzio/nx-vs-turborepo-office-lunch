@@ -1,0 +1,44 @@
+@use '../../../../styles/variables' as *;
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-sm;
+
+  &__th {
+    text-align: left;
+    padding: $spacing-sm $spacing-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-muted;
+    border-bottom: 2px solid $color-border;
+    white-space: nowrap;
+  }
+
+  &__td {
+    padding: $spacing-sm $spacing-md;
+    color: $color-text;
+    border-bottom: 1px solid $color-border;
+    vertical-align: middle;
+  }
+
+  &__row {
+    &:last-child .table__td {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: $color-bg-subtle;
+    }
+  }
+
+  &__empty {
+    padding: $spacing-lg $spacing-md;
+    text-align: center;
+    color: $color-text-muted;
+  }
+}

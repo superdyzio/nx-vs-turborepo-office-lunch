@@ -1,0 +1,50 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  @include flex-center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: $color-bg;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  width: 100%;
+  max-width: 480px;
+  margin: $spacing-md;
+
+  &__header {
+    @include flex-between;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+    margin: 0;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: $font-size-lg;
+    color: $color-text-muted;
+    padding: $spacing-xs;
+    line-height: 1;
+
+    &:hover {
+      color: $color-text;
+    }
+  }
+
+  &__body {
+    padding: $spacing-lg;
+  }
+}
