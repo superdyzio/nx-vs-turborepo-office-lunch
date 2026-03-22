@@ -224,13 +224,13 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Use AppTable, AppBadge
     - _Requirements: 7.5, 7.6, 10.1, 10.2, 10.3_
 
-- [ ] 12. Implement Testing Helper
-  - [ ] 12.1 Create initDb helper and wire to window.__initDb
+- [x] 12. Implement Testing Helper
+  - [x] 12.1 Create initDb helper and wire to window.__initDb
     - Create `src/app/helpers/init-db.ts`
     - Implement function that clears all `ol_` keys, seeds 5 users + 1 admin, 7 restaurants with 4 dishes each
     - Assign to `(window as any).__initDb` in `main.ts`
     - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5_
-  - [ ] 12.2 Write unit tests for initDb helper
+  - [x] 12.2 Write unit tests for initDb helper
     - Verify localStorage is cleared before seeding
     - Verify exactly 6 users (5 regular + 1 admin)
     - Verify exactly 7 restaurants with 4 dishes each
