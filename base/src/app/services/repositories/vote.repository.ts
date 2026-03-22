@@ -155,6 +155,15 @@ export class VoteRepository {
     }
   }
 
+  /** Returns the most recently completed round that has a winner, or null */
+  getLastCompletedRound(): VotingRound | null {
+    const all = this.load();
+    const completed = all
+      .filter((r) => !r.isActive && r.winnerId !== null)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return completed[0] ?? null;
+  }
+
   /** Returns last N winning restaurant IDs in reverse chronological order */
   getLastChoices(count: number): string[] {
     const all = this.load();

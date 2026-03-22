@@ -188,8 +188,8 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - For any user, ordering is required iff canLeave===false
     - **Validates: Requirements 7.3, 7.4**
 
-- [ ] 10. Implement Menu Ordering feature
-  - [ ] 10.1 Create OrderingComponent
+- [x] 10. Implement Menu Ordering feature
+  - [x] 10.1 Create OrderingComponent
     - Create `src/app/features/ordering/ordering.component.ts` + `.html` + `.scss`
     - Display winning restaurant's dishes
     - User selects a dish and submits order

@@ -1,0 +1,63 @@
+<div class="ordering-page">
+  <h1 class="ordering-title">Menu Ordering</h1>
+
+  @if (noWinner()) {
+    <div class="no-winner">
+      <p>No winning restaurant yet. Voting must end with a winner before ordering.</p>
+    </div>
+  }
+
+  @if (!noWinner() && winningRestaurant()) {
+    <div class="ordering-content">
+      <div class="winner-banner">
+        <app-badge text="Today's Restaurant" color="green" />
+        <h2 class="winner-name">{{ winningRestaurant()!.name }}</h2>
+      </div>
+
+      @if (mustOrder() && !orderSubmitted()) {
+        <div class="order-required-notice">
+          <app-badge text="Order required" color="red" />
+          <p>You indicated you cannot leave at the scheduled time. Please place your order.</p>
+        </div>
+      }
+
+      @if (orderSubmitted()) {
+        <div class="order-confirmed">
+          <app-badge text="Order placed" color="green" />
+          <p>Your order: <strong>{{ selectedDish()?.name }}</strong></p>
+          @if (selectedDish()?.price) {
+            <p class="dish-price">{{ selectedDish()!.price }} €</p>
+          }
+        </div>
+      }
+
+      @if (!orderSubmitted()) {
+        <div class="dish-list">
+          <h3 class="dish-list-title">Select a dish</h3>
+          @for (dish of dishes(); track dish.id) {
+            <button
+              class="dish-item"
+              [class.selected]="selectedDish()?.id === dish.id"
+              (click)="selectDish(dish)"
+              type="button"
+            >
+              <span class="dish-name">{{ dish.name }}</span>
+              @if (dish.price) {
+                <span class="dish-price">{{ dish.price }} €</span>
+              }
+            </button>
+          }
+        </div>
+
+        <div class="order-actions">
+          <app-button
+            label="Place Order"
+            variant="primary"
+            [disabled]="!selectedDish()"
+            (clicked)="submitOrder()"
+          />
+        </div>
+      }
+    </div>
+  }
+</div>
