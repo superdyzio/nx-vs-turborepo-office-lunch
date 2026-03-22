@@ -1,0 +1,39 @@
+<div class="departure-page">
+  <div class="departure-card">
+    <h1 class="departure-title">Departure Confirmation</h1>
+    <p class="departure-question">Can you leave at {{ departureTime() }}?</p>
+
+    @if (canLeave() === null) {
+      <div class="departure-actions">
+        <app-button label="Yes" variant="primary" (clicked)="onYes()" />
+        <app-button label="No" variant="secondary" (clicked)="onNo()" />
+      </div>
+    }
+
+    @if (canLeave() === false) {
+      <div class="departure-alternative">
+        <p class="departure-alt-label">What time can you leave?</p>
+        <app-input
+          label="Alternative departure time"
+          type="time"
+          placeholder="HH:MM"
+          [ngModel]="alternativeTime()"
+          (ngModelChange)="alternativeTime.set($event)"
+        />
+        <app-button
+          label="Submit"
+          variant="primary"
+          [disabled]="!alternativeTime()"
+          (clicked)="onSubmit()"
+        />
+      </div>
+    }
+
+    @if (canLeave() === true) {
+      <div class="departure-confirm">
+        <p class="departure-confirm-text">Great, see you at {{ departureTime() }}!</p>
+        <app-button label="Continue" variant="primary" (clicked)="onSubmit()" />
+      </div>
+    }
+  </div>
+</div>

@@ -163,8 +163,8 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - On successful login, navigate to /departure
     - _Requirements: 1.2, 1.3, 10.1, 10.2, 10.3_
 
-- [ ] 8. Implement Departure Confirmation feature
-  - [ ] 8.1 Create DepartureComponent
+- [x] 8. Implement Departure Confirmation feature
+  - [x] 8.1 Create DepartureComponent
     - Create `src/app/features/departure/departure.component.ts` + `.html` + `.scss`
     - Read departure time from SettingsRepository
     - Display "Can you leave at <time>?" with YES/NO buttons
