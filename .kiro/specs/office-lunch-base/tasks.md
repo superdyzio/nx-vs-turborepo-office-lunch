@@ -20,18 +20,18 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Run `npm install --save-dev fast-check`
     - _Requirements: Testing Strategy_
 
-- [ ] 2. Implement data models and LocalStorage service
-  - [ ] 2.1 Create data model interfaces
+- [x] 2. Implement data models and LocalStorage service
+  - [x] 2.1 Create data model interfaces
     - Create `src/app/models/` directory with `user.model.ts`, `restaurant.model.ts`, `settings.model.ts`, `voting.model.ts`, `order.model.ts`, `departure.model.ts`
     - Define all interfaces from the design: User, Restaurant, Dish, Settings, VotingRound, VoteEntry, VetoEntry, VotingResult, Order, DepartureResponse
     - _Requirements: 8.1, 8.2_
-  - [ ] 2.2 Implement LocalStorageService
+  - [x] 2.2 Implement LocalStorageService
     - Create `src/app/services/local-storage.service.ts`
     - Implement `getItem<T>`, `setItem<T>`, `removeItem`, `clear` methods with `ol_` prefix
     - Handle JSON parse errors gracefully (return null on corrupted data)
     - Handle QuotaExceededError with a thrown descriptive error
     - _Requirements: 8.1_
-  - [ ] 2.3 Write property test for LocalStorageService (Property 14)
+  - [x] 2.3 Write property test for LocalStorageService (Property 14)
     - **Property 14: LocalStorage service round-trip**
     - For any JSON-serializable value and key, setItem then getItem returns deeply equal value; removeItem then getItem returns null
     - **Validates: Requirements 8.1**
