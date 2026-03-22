@@ -1,0 +1,55 @@
+// Color palette
+$color-primary: #2563eb;
+$color-primary-hover: #1d4ed8;
+$color-secondary: #6b7280;
+$color-secondary-hover: #4b5563;
+$color-danger: #dc2626;
+$color-danger-hover: #b91c1c;
+$color-success: #16a34a;
+$color-warning: #d97706;
+
+$color-bg: #ffffff;
+$color-bg-subtle: #f9fafb;
+$color-border: #e0e0e0;
+$color-border-focus: #2563eb;
+$color-text: #111827;
+$color-text-muted: #6b7280;
+$color-text-inverse: #ffffff;
+
+// Badge colors
+$color-badge-green-bg: #dcfce7;
+$color-badge-green-text: #15803d;
+$color-badge-red-bg: #fee2e2;
+$color-badge-red-text: #b91c1c;
+$color-badge-gray-bg: #f3f4f6;
+$color-badge-gray-text: #374151;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+
+// Border radius
+$radius-sm: 4px;
+$radius-md: 6px;
+$radius-lg: 8px;
+
+// Font sizes
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+
+// Font weights
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+
+// Shadows
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
