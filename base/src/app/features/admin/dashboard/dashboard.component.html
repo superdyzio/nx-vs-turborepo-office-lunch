@@ -1,16 +1,29 @@
 <div class="dashboard">
   <h2 class="page-title">Admin Dashboard</h2>
 
-  @if (noRound()) {
-    <p class="empty">No completed voting round found. Run a voting round first.</p>
-  } @else {
+  <!-- Ongoing voting placeholder -->
+  <section class="section ongoing-section">
+    <h3 class="section-title">Ongoing Voting</h3>
+    <p class="empty">No active voting round.</p>
+  </section>
+
+  <!-- Most recent completed round -->
+  @if (!noRound()) {
     <div class="winner-banner">
-      Winning restaurant: <strong>{{ winnerName() }}</strong>
+      Last winner: <strong>{{ winnerName() }}</strong>
     </div>
 
     <section class="section">
-      <h3 class="section-title">Orders</h3>
+      <h3 class="section-title">Last Round Orders</h3>
       <app-table [columns]="columns" [rows]="rows()" />
+    </section>
+  }
+
+  <!-- Previous voting results -->
+  @if (historyRows().length > 0) {
+    <section class="section recent-section">
+      <h3 class="section-title">Recent Results</h3>
+      <app-table [columns]="historyColumns" [rows]="historyRows()" />
     </section>
   }
 </div>

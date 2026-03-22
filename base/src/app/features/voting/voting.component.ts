@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { RestaurantRepository } from '../../services/repositories/restaurant.repository';
 import { VoteRepository } from '../../services/repositories/vote.repository';
 import { SettingsRepository } from '../../services/repositories/settings.repository';
+import { SessionRepository } from '../../services/repositories/session.repository';
 import { AppButtonComponent } from '../../shared/components/button/app-button.component';
 import { AppBadgeComponent } from '../../shared/components/badge/app-badge.component';
 import type { Restaurant } from '../../models/restaurant.model';
@@ -22,6 +23,7 @@ export class VotingComponent implements OnInit {
   private readonly restaurantRepo = inject(RestaurantRepository);
   private readonly voteRepo = inject(VoteRepository);
   private readonly settingsRepo = inject(SettingsRepository);
+  private readonly sessionRepo = inject(SessionRepository);
   private readonly router = inject(Router);
 
   readonly currentUser = computed(() => this.auth.currentUser());
@@ -33,6 +35,7 @@ export class VotingComponent implements OnInit {
 
   readonly roundActive = signal(false);
   readonly hasVoted = signal(false);
+  readonly voteCount = signal(0);
   readonly result = signal<VotingResult | null>(null);
 
   // Vote form state: maps point value (3, 2, 1) to selected restaurantId
@@ -42,6 +45,25 @@ export class VotingComponent implements OnInit {
   readonly vetoId = signal('');
 
   readonly voteError = signal('');
+  readonly vetoableRestaurants = computed(() => {
+    const picked = new Set([this.pick3(), this.pick2(), this.pick1()].filter(Boolean));
+    return this.restaurants().filter((r) => !picked.has(r.id));
+  });
+
+  readonly pick3Options = computed(() => {
+    const others = new Set([this.pick2(), this.pick1()].filter(Boolean));
+    return this.restaurants().filter((r) => !others.has(r.id));
+  });
+
+  readonly pick2Options = computed(() => {
+    const others = new Set([this.pick3(), this.pick1()].filter(Boolean));
+    return this.restaurants().filter((r) => !others.has(r.id));
+  });
+
+  readonly pick1Options = computed(() => {
+    const others = new Set([this.pick3(), this.pick2()].filter(Boolean));
+    return this.restaurants().filter((r) => !others.has(r.id));
+  });
 
   readonly winnerName = computed(() => {
     const r = this.result();
@@ -72,7 +94,14 @@ export class VotingComponent implements OnInit {
     if (round) {
       const userId = this.currentUser()?.id;
       this.hasVoted.set(!!userId && round.votes.some((v) => v.userId === userId));
+      this.voteCount.set(round.votes.length);
       this.result.set(null);
+    }
+  }
+
+  clearVetoIfPicked(restaurantId: string): void {
+    if (this.vetoId() === restaurantId) {
+      this.vetoId.set('');
     }
   }
 
@@ -109,7 +138,9 @@ export class VotingComponent implements OnInit {
 
   startRound(): void {
     this.voteRepo.startRound();
+    this.sessionRepo.clearAll();
     this.result.set(null);
+    this.voteCount.set(0);
     this.pick3.set('');
     this.pick2.set('');
     this.pick1.set('');
@@ -119,6 +150,7 @@ export class VotingComponent implements OnInit {
   }
 
   endRound(): void {
+    if (!this.isAdmin()) return;
     const res = this.voteRepo.endRound();
     this.result.set(res);
     this.roundActive.set(false);

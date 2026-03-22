@@ -1,6 +1,9 @@
 import type { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
+import { AuthService } from './services/auth.service';
 
 export const routes: Routes = [
   {
@@ -54,6 +57,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/admin/dashboard/dashboard.component').then((m) => m.DashboardComponent),
   },
-  { path: '', redirectTo: 'departure', pathMatch: 'full' },
-  { path: '**', redirectTo: 'departure' },
+  { path: '', canActivate: [() => {
+    const auth = inject(AuthService);
+    const router = inject(Router);
+    return router.createUrlTree([auth.isAdmin() ? '/admin/dashboard' : '/departure']);
+  }], component: class {} },
+  { path: '**', canActivate: [() => {
+    const auth = inject(AuthService);
+    const router = inject(Router);
+    return router.createUrlTree([auth.isAdmin() ? '/admin/dashboard' : '/departure']);
+  }], component: class {} },
 ];

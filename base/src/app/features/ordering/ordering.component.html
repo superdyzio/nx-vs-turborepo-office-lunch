@@ -1,13 +1,19 @@
 <div class="ordering-page">
   <h1 class="ordering-title">Menu Ordering</h1>
 
-  @if (noWinner()) {
+  @if (votingOngoing()) {
+    <div class="no-winner">
+      <p>Voting is currently in progress. Ordering will be available once the round ends.</p>
+    </div>
+  }
+
+  @if (!votingOngoing() && noWinner()) {
     <div class="no-winner">
       <p>No winning restaurant yet. Voting must end with a winner before ordering.</p>
     </div>
   }
 
-  @if (!noWinner() && winningRestaurant()) {
+  @if (!votingOngoing() && !noWinner() && winningRestaurant()) {
     <div class="ordering-content">
       <div class="winner-banner">
         <app-badge text="Today's Restaurant" color="green" />

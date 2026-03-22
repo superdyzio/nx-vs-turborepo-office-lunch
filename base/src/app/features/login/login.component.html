@@ -2,30 +2,33 @@
   <div class="login-card">
     <h1 class="login-title">OfficeLunch</h1>
 
-    <app-input
-      label="Username"
-      type="text"
-      placeholder="Enter username"
-      [ngModel]="username()"
-      (ngModelChange)="username.set($event)"
-    />
+    <form (ngSubmit)="onLogin()">
+      <app-input
+        label="Username"
+        type="text"
+        placeholder="Enter username"
+        [ngModel]="username()"
+        (ngModelChange)="username.set($event)"
+        name="username"
+      />
 
-    <app-input
-      label="Password"
-      type="password"
-      placeholder="Enter password"
-      [ngModel]="password()"
-      (ngModelChange)="password.set($event)"
-    />
+      <app-input
+        label="Password"
+        type="password"
+        placeholder="Enter password"
+        [ngModel]="password()"
+        (ngModelChange)="password.set($event)"
+        name="password"
+      />
 
-    @if (errorMessage()) {
-      <p class="login-error" role="alert">{{ errorMessage() }}</p>
-    }
+      @if (errorMessage()) {
+        <p class="login-error" role="alert">{{ errorMessage() }}</p>
+      }
 
-    <app-button
-      label="Sign In"
-      variant="primary"
-      (clicked)="onLogin()"
-    />
+      <app-button
+        label="Sign In"
+        variant="primary"
+      />
+    </form>
   </div>
 </div>

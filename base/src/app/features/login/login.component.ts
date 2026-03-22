@@ -24,7 +24,8 @@ export class LoginComponent {
     const success = this.auth.login(this.username(), this.password());
     if (success) {
       this.errorMessage.set('');
-      this.router.navigate(['/departure']);
+      const destination = this.auth.isAdmin() ? '/admin/dashboard' : '/departure';
+      this.router.navigate([destination]);
     } else {
       this.errorMessage.set('Invalid username or password.');
     }

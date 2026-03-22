@@ -29,4 +29,8 @@ export class SessionRepository {
   getAllResponses(): DepartureResponse[] {
     return this.load();
   }
+
+  clearAll(): void {
+    this.save([]);
+  }
 }

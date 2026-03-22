@@ -164,6 +164,13 @@ export class VoteRepository {
     return completed[0] ?? null;
   }
 
+  /** Returns all completed rounds in reverse chronological order */
+  getAllCompletedRounds(): VotingRound[] {
+    return this.load()
+      .filter((r) => !r.isActive)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
   /** Returns last N winning restaurant IDs in reverse chronological order */
   getLastChoices(count: number): string[] {
     const all = this.load();

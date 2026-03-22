@@ -28,15 +28,15 @@ export class OrderingComponent implements OnInit {
   readonly dishes = signal<Dish[]>([]);
   readonly selectedDish = signal<Dish | null>(null);
   readonly orderSubmitted = signal(false);
-
-  /** True if user said they cannot leave at departure time — ordering is required */
   readonly mustOrder = signal(false);
-
   readonly noWinner = signal(false);
+  readonly votingOngoing = signal(false);
 
   private currentRoundId = '';
 
   ngOnInit(): void {
+    this.votingOngoing.set(!!this.voteRepo.getCurrentRound());
+
     const lastRound = this.voteRepo.getLastCompletedRound();
     if (!lastRound?.winnerId) {
       this.noWinner.set(true);

@@ -160,3 +160,17 @@
   display: flex;
   justify-content: flex-end;
 }
+
+// Admin voting
+.admin-voting {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.vote-count {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+}
