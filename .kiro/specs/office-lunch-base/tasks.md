@@ -104,18 +104,18 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - For any order data, submitOrder then getByRound includes matching order
     - **Validates: Requirements 7.2**
 
-- [ ] 4. Implement AuthService and guards
-  - [ ] 4.1 Implement AuthService
+- [x] 4. Implement AuthService and guards
+  - [x] 4.1 Implement AuthService
     - Create `src/app/services/auth.service.ts`
     - Implement `currentUser` Signal, `isAdmin` computed Signal, `login`, `logout`
     - On app init, seed default admin/admin if no users exist
     - Persist current user ID to `ol_current_user` in localStorage
     - _Requirements: 1.1, 1.2, 1.3_
-  - [ ] 4.2 Write property test for AuthService (Property 1)
+  - [x] 4.2 Write property test for AuthService (Property 1)
     - **Property 1: Login succeeds iff credentials match non-disabled user**
     - For any username/password, login returns true iff matching non-disabled user exists
     - **Validates: Requirements 1.2, 1.3, 2.3**
-  - [ ] 4.3 Implement auth guard and admin guard
+  - [x] 4.3 Implement auth guard and admin guard
     - Create `src/app/guards/auth.guard.ts` — CanActivateFn checking currentUser is not null
     - Create `src/app/guards/admin.guard.ts` — CanActivateFn checking isAdmin is true
     - _Requirements: 1.4, 3.6_
