@@ -36,50 +36,50 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - For any JSON-serializable value and key, setItem then getItem returns deeply equal value; removeItem then getItem returns null
     - **Validates: Requirements 8.1**
 
-- [ ] 3. Implement repository services
-  - [ ] 3.1 Implement UserRepository
+- [x] 3. Implement repository services
+  - [x] 3.1 Implement UserRepository
     - Create `src/app/services/repositories/user.repository.ts`
     - Implement `getAll`, `getById`, `add` (with default password "lunch"), `update`, `remove`, `findByUsername`
     - Use `LocalStorageService` with key `ol_users`
     - _Requirements: 2.1, 2.2, 2.3, 2.4_
-  - [ ] 3.2 Write property test for UserRepository (Property 2)
+  - [x] 3.2 Write property test for UserRepository (Property 2)
     - **Property 2: User CRUD round-trip**
     - For any valid user data, add → getById returns same data with password "lunch"; update → getById returns updated data; remove → getById returns null
     - **Validates: Requirements 2.1, 2.2, 2.4**
-  - [ ] 3.3 Implement RestaurantRepository
+  - [x] 3.3 Implement RestaurantRepository
     - Create `src/app/services/repositories/restaurant.repository.ts`
     - Implement `getAll`, `getEnabled`, `getById`, `add` (with empty dishes), `update`, `remove`
     - Adding a dish: update the restaurant's dishes array
     - _Requirements: 3.1, 3.2, 3.3, 3.4_
-  - [ ] 3.4 Write property tests for RestaurantRepository (Properties 3, 4)
+  - [x] 3.4 Write property tests for RestaurantRepository (Properties 3, 4)
     - **Property 3: Restaurant enable/disable filtering**
     - For any set of restaurants, getEnabled returns exactly those with isDisabled===false
     - **Validates: Requirements 3.1, 3.3, 3.4**
     - **Property 4: Dish management round-trip**
     - For any restaurant and dish, adding dish then retrieving restaurant includes that dish
     - **Validates: Requirements 3.2**
-  - [ ] 3.5 Implement SettingsRepository
+  - [x] 3.5 Implement SettingsRepository
     - Create `src/app/services/repositories/settings.repository.ts`
     - Implement `get` (with defaults: lastChoicesCount=5, calendarEventName='', departureTime='12:00') and `update`
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.6_
-  - [ ] 3.6 Write property test for SettingsRepository (Property 5)
+  - [x] 3.6 Write property test for SettingsRepository (Property 5)
     - **Property 5: Settings round-trip**
     - For any valid settings values, update then get returns the updated values
     - **Validates: Requirements 4.2, 4.3, 4.4**
-  - [ ] 3.7 Implement SessionRepository
+  - [x] 3.7 Implement SessionRepository
     - Create `src/app/services/repositories/session.repository.ts`
     - Implement `getDepartureResponse`, `setDepartureResponse`, `getAllResponses`
     - _Requirements: 5.2, 5.4_
-  - [ ] 3.8 Write property test for SessionRepository (Property 6)
+  - [x] 3.8 Write property test for SessionRepository (Property 6)
     - **Property 6: Departure response round-trip**
     - For any userId and departure response, set then get returns equivalent response
     - **Validates: Requirements 5.2, 5.4**
-  - [ ] 3.9 Implement VoteRepository
+  - [x] 3.9 Implement VoteRepository
     - Create `src/app/services/repositories/vote.repository.ts`
     - Implement `getCurrentRound`, `startRound`, `submitVote` (validate [3,2,1] allocation, reject duplicates), `submitVeto`, `endRound` (voting algorithm), `getLastChoices`
     - Voting algorithm: highest points with zero vetoes wins; if all top are vetoed → consensusReached=false with vetoUsers
     - _Requirements: 6.2, 6.3, 6.4, 6.5, 6.6, 6.7_
-  - [ ] 3.10 Write property tests for VoteRepository (Properties 7, 8, 9, 10, 11)
+  - [x] 3.10 Write property tests for VoteRepository (Properties 7, 8, 9, 10, 11)
     - **Property 7: Vote allocation validation**
     - For any vote, accepted iff exactly [3,2,1] on three distinct enabled restaurants
     - **Validates: Requirements 6.2**
@@ -95,11 +95,11 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - **Property 11: Vote immutability during active round**
     - For any user who already voted, re-submitting should be rejected and original vote unchanged
     - **Validates: Requirements 6.7**
-  - [ ] 3.11 Implement OrderRepository
+  - [x] 3.11 Implement OrderRepository
     - Create `src/app/services/repositories/order.repository.ts`
     - Implement `getByRound`, `submitOrder`, `getAll`
     - _Requirements: 7.2_
-  - [ ] 3.12 Write property test for OrderRepository (Property 12)
+  - [x] 3.12 Write property test for OrderRepository (Property 12)
     - **Property 12: Order round-trip**
     - For any order data, submitOrder then getByRound includes matching order
     - **Validates: Requirements 7.2**
