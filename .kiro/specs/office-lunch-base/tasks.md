@@ -252,7 +252,7 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Use @if to conditionally show admin nav
     - _Requirements: 10.1, 10.2, 10.3_
 
-- [ ] 14. Final checkpoint - Full application
+- [x] 14. Final checkpoint - Full application
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes
