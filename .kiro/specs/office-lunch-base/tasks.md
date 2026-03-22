@@ -172,8 +172,8 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Save response via SessionRepository, navigate to /voting
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 10.1, 10.2, 10.3_
 
-- [ ] 9. Implement Voting feature
-  - [ ] 9.1 Create VotingComponent
+- [x] 9. Implement Voting feature
+  - [x] 9.1 Create VotingComponent
     - Create `src/app/features/voting/voting.component.ts` + `.html` + `.scss`
     - Display enabled restaurants from RestaurantRepository
     - Voting form: user assigns 3, 2, 1 points to three restaurants using dropdowns or click-to-assign
@@ -183,7 +183,7 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Display result: winner or "Consensus not reached" with veto usernames
     - Use @for for restaurant list, @if for conditional sections, @switch for result states
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 10.1, 10.2, 10.3_
-  - [ ] 9.2 Write property test for order requirement logic (Property 13)
+  - [x] 9.2 Write property test for order requirement logic (Property 13)
     - **Property 13: Order requirement based on departure status**
     - For any user, ordering is required iff canLeave===false
     - **Validates: Requirements 7.3, 7.4**

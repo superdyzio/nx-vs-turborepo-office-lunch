@@ -95,3 +95,46 @@ describe('SessionRepository', () => {
     );
   });
 });
+
+describe('SessionRepository - Property 13', () => {
+  let repo: SessionRepository;
+
+  beforeEach(() => {
+    localStorage.clear();
+    TestBed.configureTestingModule({});
+    repo = TestBed.inject(SessionRepository);
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+    TestBed.resetTestingModule();
+  });
+
+  // Property 13: Order requirement based on departure status
+  // Validates: Requirements 7.3, 7.4
+  // For any user, ordering is required iff canLeave===false
+  it('Property 13: ordering is required iff canLeave is false', () => {
+    fc.assert(
+      fc.property(
+        fc.uuid(),
+        fc.boolean(),
+        (userId, canLeave) => {
+          localStorage.clear();
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(SessionRepository);
+
+          const response = { userId, canLeave };
+          repo.setDepartureResponse(userId, response);
+          const stored = repo.getDepartureResponse(userId);
+
+          expect(stored).not.toBeNull();
+          // Ordering is required iff canLeave === false
+          const orderingRequired = stored!.canLeave === false;
+          expect(orderingRequired).toBe(!canLeave);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+});
