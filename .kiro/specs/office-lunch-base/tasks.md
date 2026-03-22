@@ -1,0 +1,264 @@
+# Implementation Plan: OfficeLunch Base
+
+## Overview
+
+Build the OfficeLunch Angular application in `/base/`. The implementation proceeds bottom-up: project scaffolding → data layer → shared components → feature components → wiring and integration. All code uses standalone components, Signals, @-control-flow syntax, and SCSS.
+
+## Tasks
+
+- [x] 1. Scaffold Angular project and configure styles
+  - [x] 1.1 Generate a new Angular project in `/base/` using Angular CLI with SCSS, standalone components, and skip tests flag off
+    - Run `ng new office-lunch --directory=/base --style=scss --standalone --routing`
+    - Ensure `angular.json` uses SCSS as default style extension
+    - _Requirements: 10.1, 10.5_
+  - [x] 1.2 Create shared SCSS variables and mixins
+    - Create `src/styles/_variables.scss` with color palette, spacing, border-radius, font sizes
+    - Create `src/styles/_mixins.scss` with button, card, input, and layout mixins
+    - Update `src/styles.scss` to import variables, add CSS reset and base typography
+    - _Requirements: 10.1_
+  - [x] 1.3 Install fast-check for property-based testing
+    - Run `npm install --save-dev fast-check`
+    - _Requirements: Testing Strategy_
+
+- [ ] 2. Implement data models and LocalStorage service
+  - [ ] 2.1 Create data model interfaces
+    - Create `src/app/models/` directory with `user.model.ts`, `restaurant.model.ts`, `settings.model.ts`, `voting.model.ts`, `order.model.ts`, `departure.model.ts`
+    - Define all interfaces from the design: User, Restaurant, Dish, Settings, VotingRound, VoteEntry, VetoEntry, VotingResult, Order, DepartureResponse
+    - _Requirements: 8.1, 8.2_
+  - [ ] 2.2 Implement LocalStorageService
+    - Create `src/app/services/local-storage.service.ts`
+    - Implement `getItem<T>`, `setItem<T>`, `removeItem`, `clear` methods with `ol_` prefix
+    - Handle JSON parse errors gracefully (return null on corrupted data)
+    - Handle QuotaExceededError with a thrown descriptive error
+    - _Requirements: 8.1_
+  - [ ] 2.3 Write property test for LocalStorageService (Property 14)
+    - **Property 14: LocalStorage service round-trip**
+    - For any JSON-serializable value and key, setItem then getItem returns deeply equal value; removeItem then getItem returns null
+    - **Validates: Requirements 8.1**
+
+- [ ] 3. Implement repository services
+  - [ ] 3.1 Implement UserRepository
+    - Create `src/app/services/repositories/user.repository.ts`
+    - Implement `getAll`, `getById`, `add` (with default password "lunch"), `update`, `remove`, `findByUsername`
+    - Use `LocalStorageService` with key `ol_users`
+    - _Requirements: 2.1, 2.2, 2.3, 2.4_
+  - [ ] 3.2 Write property test for UserRepository (Property 2)
+    - **Property 2: User CRUD round-trip**
+    - For any valid user data, add → getById returns same data with password "lunch"; update → getById returns updated data; remove → getById returns null
+    - **Validates: Requirements 2.1, 2.2, 2.4**
+  - [ ] 3.3 Implement RestaurantRepository
+    - Create `src/app/services/repositories/restaurant.repository.ts`
+    - Implement `getAll`, `getEnabled`, `getById`, `add` (with empty dishes), `update`, `remove`
+    - Adding a dish: update the restaurant's dishes array
+    - _Requirements: 3.1, 3.2, 3.3, 3.4_
+  - [ ] 3.4 Write property tests for RestaurantRepository (Properties 3, 4)
+    - **Property 3: Restaurant enable/disable filtering**
+    - For any set of restaurants, getEnabled returns exactly those with isDisabled===false
+    - **Validates: Requirements 3.1, 3.3, 3.4**
+    - **Property 4: Dish management round-trip**
+    - For any restaurant and dish, adding dish then retrieving restaurant includes that dish
+    - **Validates: Requirements 3.2**
+  - [ ] 3.5 Implement SettingsRepository
+    - Create `src/app/services/repositories/settings.repository.ts`
+    - Implement `get` (with defaults: lastChoicesCount=5, calendarEventName='', departureTime='12:00') and `update`
+    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.6_
+  - [ ] 3.6 Write property test for SettingsRepository (Property 5)
+    - **Property 5: Settings round-trip**
+    - For any valid settings values, update then get returns the updated values
+    - **Validates: Requirements 4.2, 4.3, 4.4**
+  - [ ] 3.7 Implement SessionRepository
+    - Create `src/app/services/repositories/session.repository.ts`
+    - Implement `getDepartureResponse`, `setDepartureResponse`, `getAllResponses`
+    - _Requirements: 5.2, 5.4_
+  - [ ] 3.8 Write property test for SessionRepository (Property 6)
+    - **Property 6: Departure response round-trip**
+    - For any userId and departure response, set then get returns equivalent response
+    - **Validates: Requirements 5.2, 5.4**
+  - [ ] 3.9 Implement VoteRepository
+    - Create `src/app/services/repositories/vote.repository.ts`
+    - Implement `getCurrentRound`, `startRound`, `submitVote` (validate [3,2,1] allocation, reject duplicates), `submitVeto`, `endRound` (voting algorithm), `getLastChoices`
+    - Voting algorithm: highest points with zero vetoes wins; if all top are vetoed → consensusReached=false with vetoUsers
+    - _Requirements: 6.2, 6.3, 6.4, 6.5, 6.6, 6.7_
+  - [ ] 3.10 Write property tests for VoteRepository (Properties 7, 8, 9, 10, 11)
+    - **Property 7: Vote allocation validation**
+    - For any vote, accepted iff exactly [3,2,1] on three distinct enabled restaurants
+    - **Validates: Requirements 6.2**
+    - **Property 8: Veto recording round-trip**
+    - For any user and restaurant, casting veto then inspecting round includes that veto
+    - **Validates: Requirements 6.3**
+    - **Property 9: Voting algorithm correctness**
+    - For any votes and vetoes, winner is highest points with zero vetoes; if all top vetoed → no consensus with correct vetoUsers
+    - **Validates: Requirements 6.4, 6.5**
+    - **Property 10: Last choices retrieval**
+    - For any sequence of rounds with winners and any N, getLastChoices(N) returns last min(N, total) winners in reverse chronological order
+    - **Validates: Requirements 6.6**
+    - **Property 11: Vote immutability during active round**
+    - For any user who already voted, re-submitting should be rejected and original vote unchanged
+    - **Validates: Requirements 6.7**
+  - [ ] 3.11 Implement OrderRepository
+    - Create `src/app/services/repositories/order.repository.ts`
+    - Implement `getByRound`, `submitOrder`, `getAll`
+    - _Requirements: 7.2_
+  - [ ] 3.12 Write property test for OrderRepository (Property 12)
+    - **Property 12: Order round-trip**
+    - For any order data, submitOrder then getByRound includes matching order
+    - **Validates: Requirements 7.2**
+
+- [ ] 4. Implement AuthService and guards
+  - [ ] 4.1 Implement AuthService
+    - Create `src/app/services/auth.service.ts`
+    - Implement `currentUser` Signal, `isAdmin` computed Signal, `login`, `logout`
+    - On app init, seed default admin/admin if no users exist
+    - Persist current user ID to `ol_current_user` in localStorage
+    - _Requirements: 1.1, 1.2, 1.3_
+  - [ ] 4.2 Write property test for AuthService (Property 1)
+    - **Property 1: Login succeeds iff credentials match non-disabled user**
+    - For any username/password, login returns true iff matching non-disabled user exists
+    - **Validates: Requirements 1.2, 1.3, 2.3**
+  - [ ] 4.3 Implement auth guard and admin guard
+    - Create `src/app/guards/auth.guard.ts` — CanActivateFn checking currentUser is not null
+    - Create `src/app/guards/admin.guard.ts` — CanActivateFn checking isAdmin is true
+    - _Requirements: 1.4, 3.6_
+
+- [ ] 5. Checkpoint - Data layer complete
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 6. Build shared UI components
+  - [ ] 6.1 Create AppButtonComponent
+    - Create `src/app/shared/components/button/` with component, SCSS, and spec
+    - Inputs: label, variant ('primary'|'secondary'|'danger'), disabled
+    - Output: clicked event
+    - Minimalistic flat style using shared SCSS mixins
+    - _Requirements: 10.1, 10.3_
+  - [ ] 6.2 Create AppInputComponent
+    - Create `src/app/shared/components/input/` with component, SCSS, and spec
+    - Inputs: label, type, placeholder; two-way binding support
+    - _Requirements: 10.1, 10.3_
+  - [ ] 6.3 Create AppCardComponent
+    - Create `src/app/shared/components/card/` with component, SCSS, and spec
+    - Input: title; content projection via ng-content
+    - _Requirements: 10.1, 10.3_
+  - [ ] 6.4 Create AppBadgeComponent
+    - Create `src/app/shared/components/badge/` with component and SCSS
+    - Inputs: text, color ('green'|'red'|'gray')
+    - _Requirements: 10.1, 10.3_
+  - [ ] 6.5 Create AppModalComponent
+    - Create `src/app/shared/components/modal/` with component, SCSS, and spec
+    - Inputs: open, title; Output: closed; content projection
+    - _Requirements: 10.1, 10.3_
+  - [ ] 6.6 Create AppTableComponent
+    - Create `src/app/shared/components/table/` with component, SCSS, and spec
+    - Inputs: columns, rows; Output: rowAction
+    - _Requirements: 10.1, 10.3_
+  - [ ] 6.7 Create shared barrel export
+    - Create `src/app/shared/index.ts` exporting all shared components
+    - _Requirements: 10.1_
+
+- [ ] 7. Implement Login feature
+  - [ ] 7.1 Create LoginComponent
+    - Create `src/app/features/login/login.component.ts` + `.html` + `.scss`
+    - Standalone component with Signals for username, password, errorMessage
+    - Use @if for error display, shared AppInput and AppButton
+    - On successful login, navigate to /departure
+    - _Requirements: 1.2, 1.3, 10.1, 10.2, 10.3_
+
+- [ ] 8. Implement Departure Confirmation feature
+  - [ ] 8.1 Create DepartureComponent
+    - Create `src/app/features/departure/departure.component.ts` + `.html` + `.scss`
+    - Read departure time from SettingsRepository
+    - Display "Can you leave at <time>?" with YES/NO buttons
+    - @if user selects NO, show time input for alternative time
+    - Save response via SessionRepository, navigate to /voting
+    - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 10.1, 10.2, 10.3_
+
+- [ ] 9. Implement Voting feature
+  - [ ] 9.1 Create VotingComponent
+    - Create `src/app/features/voting/voting.component.ts` + `.html` + `.scss`
+    - Display enabled restaurants from RestaurantRepository
+    - Voting form: user assigns 3, 2, 1 points to three restaurants using dropdowns or click-to-assign
+    - Optional veto selection
+    - Show last N choices (read-only list) from VoteRepository.getLastChoices
+    - Admin sees "End Voting" button; on click calls VoteRepository.endRound
+    - Display result: winner or "Consensus not reached" with veto usernames
+    - Use @for for restaurant list, @if for conditional sections, @switch for result states
+    - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 10.1, 10.2, 10.3_
+  - [ ] 9.2 Write property test for order requirement logic (Property 13)
+    - **Property 13: Order requirement based on departure status**
+    - For any user, ordering is required iff canLeave===false
+    - **Validates: Requirements 7.3, 7.4**
+
+- [ ] 10. Implement Menu Ordering feature
+  - [ ] 10.1 Create OrderingComponent
+    - Create `src/app/features/ordering/ordering.component.ts` + `.html` + `.scss`
+    - Display winning restaurant's dishes
+    - User selects a dish and submits order
+    - If user's departure response is canLeave=false, enforce ordering (disable navigation away without ordering)
+    - Use @for for dish list, @if for order confirmation
+    - _Requirements: 7.1, 7.2, 7.3, 7.4, 10.1, 10.2, 10.3_
+
+- [ ] 11. Implement Admin features
+  - [ ] 11.1 Create UserManagementComponent
+    - Create `src/app/features/admin/user-management/user-management.component.ts` + `.html` + `.scss`
+    - List all users with status badges (enabled/disabled/admin)
+    - Add user form (username only, password defaults to "lunch")
+    - Edit user modal, disable/enable toggle, remove button with confirmation
+    - Use AppTable, AppButton, AppModal, AppBadge
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 10.1, 10.2, 10.3_
+  - [ ] 11.2 Create MenuManagementComponent
+    - Create `src/app/features/admin/menu-management/menu-management.component.ts` + `.html` + `.scss`
+    - List restaurants with their dishes
+    - Add restaurant form, add dish to restaurant form
+    - Disable/enable restaurant toggle
+    - Use AppTable, AppButton, AppCard, AppModal
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 10.1, 10.2, 10.3_
+  - [ ] 11.3 Create SettingsComponent
+    - Create `src/app/features/admin/settings/settings.component.ts` + `.html` + `.scss`
+    - Form fields for lastChoicesCount, calendarEventName, departureTime
+    - Placeholder sections for future integrations (Wolt, Outlook, Slack, Uber Eats, Google Maps) — display as disabled cards
+    - Save button persists via SettingsRepository
+    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 10.1, 10.2, 10.3_
+  - [ ] 11.4 Create DashboardComponent
+    - Create `src/app/features/admin/dashboard/dashboard.component.ts` + `.html` + `.scss`
+    - Display all orders for current round: user name, selected dish, departure status
+    - Use AppTable, AppBadge
+    - _Requirements: 7.5, 7.6, 10.1, 10.2, 10.3_
+
+- [ ] 12. Implement Testing Helper
+  - [ ] 12.1 Create initDb helper and wire to window.__initDb
+    - Create `src/app/helpers/init-db.ts`
+    - Implement function that clears all `ol_` keys, seeds 5 users + 1 admin, 7 restaurants with 4 dishes each
+    - Assign to `(window as any).__initDb` in `main.ts`
+    - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5_
+  - [ ] 12.2 Write unit tests for initDb helper
+    - Verify localStorage is cleared before seeding
+    - Verify exactly 6 users (5 regular + 1 admin)
+    - Verify exactly 7 restaurants with 4 dishes each
+    - _Requirements: 9.2, 9.3, 9.4_
+
+- [ ] 13. Wire routing and navigation
+  - [ ] 13.1 Configure app routes with lazy loading
+    - Set up routes in `src/app/app.routes.ts`
+    - Lazy-load each feature: login, departure, voting, ordering, admin/users, admin/menu, admin/settings, admin/dashboard
+    - Apply authGuard to all routes except /login
+    - Apply adminGuard to all /admin/* routes
+    - Default redirect: unauthenticated → /login, authenticated → /departure
+    - _Requirements: 1.4, 3.6, 10.4_
+  - [ ] 13.2 Create AppComponent shell with navigation
+    - Update `src/app/app.component.ts` + `.html` + `.scss`
+    - Show nav bar when authenticated: links to Departure, Voting, Ordering
+    - Admin nav: additional links to User Management, Menu Management, Settings, Dashboard
+    - Logout button
+    - Use @if to conditionally show admin nav
+    - _Requirements: 10.1, 10.2, 10.3_
+
+- [ ] 14. Final checkpoint - Full application
+  - Ensure all tests pass, ask the user if questions arise.
+
+## Notes
+
+- All tasks are required
+- Each task references specific requirements for traceability
+- Property tests use fast-check with minimum 100 iterations
+- All components are standalone, use Signals, and @-control-flow syntax
+- SCSS with shared variables/mixins for consistent minimalistic styling
+- Checkpoints ensure incremental validation
