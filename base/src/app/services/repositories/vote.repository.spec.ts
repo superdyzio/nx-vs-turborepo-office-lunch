@@ -10,17 +10,6 @@ function makeRepos() {
   return { storage, userRepo, voteRepo };
 }
 
-/** Generates a valid [3,2,1] allocation over the given restaurant IDs (picks 3) */
-const validAllocation = (restaurantIds: string[]) =>
-  fc
-    .shuffledSubarray(restaurantIds, { minLength: 3, maxLength: 3 })
-    .chain((ids) =>
-      fc.shuffledSubarray([3, 2, 1], { minLength: 3, maxLength: 3 }).map(
-        (pts) =>
-          ids.map((id, i) => ({ restaurantId: id, points: pts[i] }))
-      )
-    );
-
 describe('VoteRepository', () => {
   beforeEach(() => localStorage.clear());
   afterEach(() => localStorage.clear());

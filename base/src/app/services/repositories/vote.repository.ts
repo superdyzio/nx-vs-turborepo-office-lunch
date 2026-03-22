@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import {
-  VetoEntry,
+import type {
   VoteEntry,
   VotingResult,
-  VotingRound,
-} from '../../models/voting.model';
-import { LocalStorageService } from '../local-storage.service';
-import { UserRepository } from './user.repository';
+  VotingRound} from '../../models/voting.model';
+import type { LocalStorageService } from '../local-storage.service';
+import type { UserRepository } from './user.repository';
 
 const KEY = 'ol_votes';
 

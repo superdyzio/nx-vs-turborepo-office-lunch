@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DepartureResponse } from '../../models/departure.model';
-import { LocalStorageService } from '../local-storage.service';
+import type { DepartureResponse } from '../../models/departure.model';
+import type { LocalStorageService } from '../local-storage.service';
 
 const KEY = 'ol_sessions';
 

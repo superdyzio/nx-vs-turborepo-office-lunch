@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../models/user.model';
-import { LocalStorageService } from '../local-storage.service';
+import type { User } from '../../models/user.model';
+import type { LocalStorageService } from '../local-storage.service';
 
 const KEY = 'ol_users';
 

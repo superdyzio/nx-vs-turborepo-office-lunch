@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Settings } from '../../models/settings.model';
-import { LocalStorageService } from '../local-storage.service';
+import type { Settings } from '../../models/settings.model';
+import type { LocalStorageService } from '../local-storage.service';
 
 const KEY = 'ol_settings';
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Dish, Restaurant } from '../../models/restaurant.model';
-import { LocalStorageService } from '../local-storage.service';
+import type { Dish, Restaurant } from '../../models/restaurant.model';
+import type { LocalStorageService } from '../local-storage.service';
 
 const KEY = 'ol_restaurants';
 

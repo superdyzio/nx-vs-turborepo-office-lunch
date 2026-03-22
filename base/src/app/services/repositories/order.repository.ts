@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Order } from '../../models/order.model';
-import { LocalStorageService } from '../local-storage.service';
+import type { Order } from '../../models/order.model';
+import type { LocalStorageService } from '../local-storage.service';
 
 const KEY = 'ol_orders';
 
