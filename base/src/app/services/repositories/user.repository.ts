@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import type { User } from '../../models/user.model';
-import type { LocalStorageService } from '../local-storage.service';
+import { LocalStorageService } from '../local-storage.service';
 
 const KEY = 'ol_users';
 
 @Injectable({ providedIn: 'root' })
 export class UserRepository {
-  constructor(private storage: LocalStorageService) {}
+  private storage = inject(LocalStorageService);
 
   private load(): User[] {
     return this.storage.getItem<User[]>(KEY) ?? [];

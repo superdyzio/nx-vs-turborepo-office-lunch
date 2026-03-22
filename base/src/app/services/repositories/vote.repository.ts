@@ -1,19 +1,17 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import type {
   VoteEntry,
   VotingResult,
   VotingRound} from '../../models/voting.model';
-import type { LocalStorageService } from '../local-storage.service';
-import type { UserRepository } from './user.repository';
+import { LocalStorageService } from '../local-storage.service';
+import { UserRepository } from './user.repository';
 
 const KEY = 'ol_votes';
 
 @Injectable({ providedIn: 'root' })
 export class VoteRepository {
-  constructor(
-    private storage: LocalStorageService,
-    private userRepo: UserRepository
-  ) {}
+  private storage = inject(LocalStorageService);
+  private userRepo = inject(UserRepository);
 
   private load(): VotingRound[] {
     return this.storage.getItem<VotingRound[]>(KEY) ?? [];

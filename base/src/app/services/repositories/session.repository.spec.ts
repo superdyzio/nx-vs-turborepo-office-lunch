@@ -1,5 +1,5 @@
 import * as fc from 'fast-check';
-import { LocalStorageService } from '../local-storage.service';
+import { TestBed } from '@angular/core/testing';
 import { SessionRepository } from './session.repository';
 
 const timeString = () =>
@@ -12,11 +12,13 @@ describe('SessionRepository', () => {
 
   beforeEach(() => {
     localStorage.clear();
-    repo = new SessionRepository(new LocalStorageService());
+    TestBed.configureTestingModule({});
+    repo = TestBed.inject(SessionRepository);
   });
 
   afterEach(() => {
     localStorage.clear();
+    TestBed.resetTestingModule();
   });
 
   // Property 6: Departure response round-trip
@@ -28,7 +30,9 @@ describe('SessionRepository', () => {
         fc.constant(true),
         (userId, canLeave) => {
           localStorage.clear();
-          repo = new SessionRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(SessionRepository);
 
           const response = { userId, canLeave };
           repo.setDepartureResponse(userId, response);
@@ -50,7 +54,9 @@ describe('SessionRepository', () => {
         timeString(),
         (userId, alternativeTime) => {
           localStorage.clear();
-          repo = new SessionRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(SessionRepository);
 
           const response = { userId, canLeave: false, alternativeTime };
           repo.setDepartureResponse(userId, response);
@@ -73,7 +79,9 @@ describe('SessionRepository', () => {
         fc.boolean(),
         (userId, first, second) => {
           localStorage.clear();
-          repo = new SessionRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(SessionRepository);
 
           repo.setDepartureResponse(userId, { userId, canLeave: first });
           repo.setDepartureResponse(userId, { userId, canLeave: second });

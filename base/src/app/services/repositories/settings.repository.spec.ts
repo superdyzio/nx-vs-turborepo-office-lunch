@@ -1,5 +1,5 @@
 import * as fc from 'fast-check';
-import { LocalStorageService } from '../local-storage.service';
+import { TestBed } from '@angular/core/testing';
 import { SettingsRepository } from './settings.repository';
 
 // HH:mm time string generator
@@ -16,11 +16,13 @@ describe('SettingsRepository', () => {
 
   beforeEach(() => {
     localStorage.clear();
-    repo = new SettingsRepository(new LocalStorageService());
+    TestBed.configureTestingModule({});
+    repo = TestBed.inject(SettingsRepository);
   });
 
   afterEach(() => {
     localStorage.clear();
+    TestBed.resetTestingModule();
   });
 
   it('returns defaults when nothing is stored', () => {
@@ -42,7 +44,9 @@ describe('SettingsRepository', () => {
         }),
         (settings) => {
           localStorage.clear();
-          repo = new SettingsRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(SettingsRepository);
 
           repo.update(settings);
           const result = repo.get();

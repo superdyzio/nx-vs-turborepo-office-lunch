@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import type { Settings } from '../../models/settings.model';
-import type { LocalStorageService } from '../local-storage.service';
+import { LocalStorageService } from '../local-storage.service';
 
 const KEY = 'ol_settings';
 
@@ -12,7 +12,7 @@ const DEFAULTS: Settings = {
 
 @Injectable({ providedIn: 'root' })
 export class SettingsRepository {
-  constructor(private storage: LocalStorageService) {}
+  private storage = inject(LocalStorageService);
 
   get(): Settings {
     const stored = this.storage.getItem<Partial<Settings>>(KEY);

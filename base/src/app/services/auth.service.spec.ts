@@ -1,18 +1,21 @@
 import * as fc from 'fast-check';
-import { LocalStorageService } from './local-storage.service';
+import { TestBed } from '@angular/core/testing';
 import { UserRepository } from './repositories/user.repository';
 import { AuthService } from './auth.service';
 
 function makeAuthService(): { auth: AuthService; userRepo: UserRepository } {
-  const storage = new LocalStorageService();
-  const userRepo = new UserRepository(storage);
-  const auth = new AuthService(storage, userRepo);
+  TestBed.configureTestingModule({});
+  const auth = TestBed.inject(AuthService);
+  const userRepo = TestBed.inject(UserRepository);
   return { auth, userRepo };
 }
 
 describe('AuthService', () => {
   beforeEach(() => localStorage.clear());
-  afterEach(() => localStorage.clear());
+  afterEach(() => {
+    localStorage.clear();
+    TestBed.resetTestingModule();
+  });
 
   // Property 1: Login succeeds iff credentials match non-disabled user
   // Validates: Requirements 1.2, 1.3, 2.3
@@ -28,6 +31,7 @@ describe('AuthService', () => {
         fc.string({ minLength: 1, maxLength: 20 }),
         (userData, attemptedPassword) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { auth, userRepo } = makeAuthService();
 
           // Add user then set the exact password we want to test
@@ -56,6 +60,7 @@ describe('AuthService', () => {
         fc.string({ minLength: 1, maxLength: 20 }),
         (username, password) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { auth } = makeAuthService();
           // No users added — only the seeded admin exists
           // Login with a non-admin username should always fail

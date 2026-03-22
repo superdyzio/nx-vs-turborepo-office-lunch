@@ -1,5 +1,5 @@
 import * as fc from 'fast-check';
-import { LocalStorageService } from '../local-storage.service';
+import { TestBed } from '@angular/core/testing';
 import { UserRepository } from './user.repository';
 
 describe('UserRepository', () => {
@@ -7,11 +7,13 @@ describe('UserRepository', () => {
 
   beforeEach(() => {
     localStorage.clear();
-    repo = new UserRepository(new LocalStorageService());
+    TestBed.configureTestingModule({});
+    repo = TestBed.inject(UserRepository);
   });
 
   afterEach(() => {
     localStorage.clear();
+    TestBed.resetTestingModule();
   });
 
   // Property 2: User CRUD round-trip
@@ -26,7 +28,9 @@ describe('UserRepository', () => {
         }),
         (userData) => {
           localStorage.clear();
-          repo = new UserRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(UserRepository);
 
           const created = repo.add(userData);
           const fetched = repo.getById(created.id);
@@ -57,7 +61,9 @@ describe('UserRepository', () => {
         }),
         (initial, updated) => {
           localStorage.clear();
-          repo = new UserRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(UserRepository);
 
           const created = repo.add(initial);
           repo.update({ ...created, ...updated });
@@ -82,7 +88,9 @@ describe('UserRepository', () => {
         }),
         (userData) => {
           localStorage.clear();
-          repo = new UserRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(UserRepository);
 
           const created = repo.add(userData);
           repo.remove(created.id);

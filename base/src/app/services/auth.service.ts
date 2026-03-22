@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import type { User } from '../models/user.model';
 import { LocalStorageService } from './local-storage.service';
 import { UserRepository } from './repositories/user.repository';
@@ -7,13 +7,13 @@ const CURRENT_USER_KEY = 'ol_current_user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private readonly storage = inject(LocalStorageService);
+  private readonly userRepo = inject(UserRepository);
+
   readonly currentUser = signal<User | null>(null);
   readonly isAdmin = computed(() => this.currentUser()?.isAdmin === true);
 
-  constructor(
-    private readonly storage: LocalStorageService,
-    private readonly userRepo: UserRepository
-  ) {
+  constructor() {
     this.seedDefaultAdmin();
     this.restoreSession();
   }

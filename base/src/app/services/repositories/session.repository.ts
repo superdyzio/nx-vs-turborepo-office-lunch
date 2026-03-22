@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import type { DepartureResponse } from '../../models/departure.model';
-import type { LocalStorageService } from '../local-storage.service';
+import { LocalStorageService } from '../local-storage.service';
 
 const KEY = 'ol_sessions';
 
 @Injectable({ providedIn: 'root' })
 export class SessionRepository {
-  constructor(private storage: LocalStorageService) {}
+  private storage = inject(LocalStorageService);
 
   private load(): DepartureResponse[] {
     return this.storage.getItem<DepartureResponse[]>(KEY) ?? [];

@@ -1,18 +1,21 @@
 import * as fc from 'fast-check';
-import { LocalStorageService } from '../local-storage.service';
+import { TestBed } from '@angular/core/testing';
 import { UserRepository } from './user.repository';
 import { VoteRepository } from './vote.repository';
 
 function makeRepos() {
-  const storage = new LocalStorageService();
-  const userRepo = new UserRepository(storage);
-  const voteRepo = new VoteRepository(storage, userRepo);
-  return { storage, userRepo, voteRepo };
+  TestBed.configureTestingModule({});
+  const userRepo = TestBed.inject(UserRepository);
+  const voteRepo = TestBed.inject(VoteRepository);
+  return { userRepo, voteRepo };
 }
 
 describe('VoteRepository', () => {
   beforeEach(() => localStorage.clear());
-  afterEach(() => localStorage.clear());
+  afterEach(() => {
+    localStorage.clear();
+    TestBed.resetTestingModule();
+  });
 
   // ─── Property 7: Vote allocation validation ───────────────────────────────
   // Validates: Requirements 6.2
@@ -25,6 +28,7 @@ describe('VoteRepository', () => {
         fc.uuid(),
         (restaurantIds, userId) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { voteRepo } = makeRepos();
           voteRepo.startRound();
 
@@ -56,6 +60,7 @@ describe('VoteRepository', () => {
         ),
         (restaurantIds, userId, badPoints) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { voteRepo } = makeRepos();
           voteRepo.startRound();
 
@@ -75,6 +80,7 @@ describe('VoteRepository', () => {
     fc.assert(
       fc.property(fc.uuid(), fc.uuid(), (restaurantId, userId) => {
         localStorage.clear();
+        TestBed.resetTestingModule();
         const { voteRepo } = makeRepos();
         voteRepo.startRound();
 
@@ -96,6 +102,7 @@ describe('VoteRepository', () => {
     fc.assert(
       fc.property(fc.uuid(), fc.uuid(), (userId, restaurantId) => {
         localStorage.clear();
+        TestBed.resetTestingModule();
         const { voteRepo } = makeRepos();
         voteRepo.startRound();
 
@@ -117,18 +124,16 @@ describe('VoteRepository', () => {
   it('Property 9: winner is highest-points restaurant with zero vetoes', () => {
     fc.assert(
       fc.property(
-        // 3 distinct restaurant IDs
         fc
           .array(fc.uuid(), { minLength: 3, maxLength: 3 })
           .filter((ids) => new Set(ids).size === 3),
-        // 1 voter
         fc.uuid(),
         ([r1, r2, r3], userId) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { voteRepo } = makeRepos();
           voteRepo.startRound();
 
-          // r1 gets 3 pts, r2 gets 2, r3 gets 1 — no vetoes
           voteRepo.submitVote(userId, {
             userId,
             allocations: [
@@ -156,6 +161,7 @@ describe('VoteRepository', () => {
         fc.uuid(),
         ([r1, r2, r3], voter) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { userRepo, voteRepo } = makeRepos();
           const vetoer = userRepo.add({ username: 'vetoer', isAdmin: false, isDisabled: false });
 
@@ -169,11 +175,9 @@ describe('VoteRepository', () => {
               { restaurantId: r3, points: 1 },
             ],
           });
-          // Veto the sole top restaurant — per spec, winner must have zero vetoes
           voteRepo.submitVeto(vetoer.id, r1);
 
           const result = voteRepo.endRound();
-          // r1 is the only top scorer but is vetoed → no consensus
           expect(result.consensusReached).toBe(false);
           expect(result.winnerId).toBeNull();
           expect(result.vetoUsers).toContain('vetoer');
@@ -192,13 +196,13 @@ describe('VoteRepository', () => {
         fc.uuid(),
         ([r1, r2, r3], voter) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { userRepo, voteRepo } = makeRepos();
           const u1 = userRepo.add({ username: 'alice', isAdmin: false, isDisabled: false });
           const u2 = userRepo.add({ username: 'bob', isAdmin: false, isDisabled: false });
 
           voteRepo.startRound();
 
-          // Both restaurants get same top score via two voters
           voteRepo.submitVote(voter, {
             userId: voter,
             allocations: [
@@ -215,7 +219,6 @@ describe('VoteRepository', () => {
               { restaurantId: r3, points: 1 },
             ],
           });
-          // Veto both top restaurants (r1 has 5pts, r2 has 5pts)
           voteRepo.submitVeto(u1.id, r1);
           voteRepo.submitVeto(u2.id, r2);
 
@@ -238,6 +241,7 @@ describe('VoteRepository', () => {
         fc.integer({ min: 1, max: 5 }),
         (totalRounds, n) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { userRepo, voteRepo } = makeRepos();
           const voter = userRepo.add({ username: 'voter', isAdmin: false, isDisabled: false });
 
@@ -263,9 +267,7 @@ describe('VoteRepository', () => {
           const expected = Math.min(n, winners.length);
           expect(choices.length).toBe(expected);
 
-          // All returned choices must be actual winners
           choices.forEach((id) => expect(winners).toContain(id));
-          // The set of returned choices must be the last min(n, total) unique winners
           const lastN = winners.slice(-expected);
           expect(new Set(choices)).toEqual(new Set(lastN));
         }
@@ -288,6 +290,7 @@ describe('VoteRepository', () => {
         fc.uuid(),
         ([r1, r2, r3], [s1, s2, s3], userId) => {
           localStorage.clear();
+          TestBed.resetTestingModule();
           const { voteRepo } = makeRepos();
           voteRepo.startRound();
 

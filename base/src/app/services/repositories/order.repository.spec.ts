@@ -1,5 +1,5 @@
 import * as fc from 'fast-check';
-import { LocalStorageService } from '../local-storage.service';
+import { TestBed } from '@angular/core/testing';
 import { OrderRepository } from './order.repository';
 
 describe('OrderRepository', () => {
@@ -7,11 +7,13 @@ describe('OrderRepository', () => {
 
   beforeEach(() => {
     localStorage.clear();
-    repo = new OrderRepository(new LocalStorageService());
+    TestBed.configureTestingModule({});
+    repo = TestBed.inject(OrderRepository);
   });
 
   afterEach(() => {
     localStorage.clear();
+    TestBed.resetTestingModule();
   });
 
   // Property 12: Order round-trip
@@ -27,7 +29,9 @@ describe('OrderRepository', () => {
         }),
         (orderData) => {
           localStorage.clear();
-          repo = new OrderRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(OrderRepository);
 
           const submitted = repo.submitOrder(orderData);
           const orders = repo.getByRound(orderData.roundId);
@@ -53,7 +57,9 @@ describe('OrderRepository', () => {
         (roundA, roundB, userId, dishId) => {
           fc.pre(roundA !== roundB);
           localStorage.clear();
-          repo = new OrderRepository(new LocalStorageService());
+          TestBed.resetTestingModule();
+          TestBed.configureTestingModule({});
+          repo = TestBed.inject(OrderRepository);
 
           const restaurantId = crypto.randomUUID();
           repo.submitOrder({ roundId: roundA, userId, restaurantId, dishId });
