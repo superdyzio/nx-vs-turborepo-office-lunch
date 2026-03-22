@@ -1,0 +1,16 @@
+<div class="dashboard">
+  <h2 class="page-title">Admin Dashboard</h2>
+
+  @if (noRound()) {
+    <p class="empty">No completed voting round found. Run a voting round first.</p>
+  } @else {
+    <div class="winner-banner">
+      Winning restaurant: <strong>{{ winnerName() }}</strong>
+    </div>
+
+    <section class="section">
+      <h3 class="section-title">Orders</h3>
+      <app-table [columns]="columns" [rows]="rows()" />
+    </section>
+  }
+</div>

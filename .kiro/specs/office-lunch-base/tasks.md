@@ -197,28 +197,28 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Use @for for dish list, @if for order confirmation
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 10.1, 10.2, 10.3_
 
-- [ ] 11. Implement Admin features
-  - [ ] 11.1 Create UserManagementComponent
+- [x] 11. Implement Admin features
+  - [x] 11.1 Create UserManagementComponent
     - Create `src/app/features/admin/user-management/user-management.component.ts` + `.html` + `.scss`
     - List all users with status badges (enabled/disabled/admin)
     - Add user form (username only, password defaults to "lunch")
     - Edit user modal, disable/enable toggle, remove button with confirmation
     - Use AppTable, AppButton, AppModal, AppBadge
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 10.1, 10.2, 10.3_
-  - [ ] 11.2 Create MenuManagementComponent
+  - [x] 11.2 Create MenuManagementComponent
     - Create `src/app/features/admin/menu-management/menu-management.component.ts` + `.html` + `.scss`
     - List restaurants with their dishes
     - Add restaurant form, add dish to restaurant form
     - Disable/enable restaurant toggle
     - Use AppTable, AppButton, AppCard, AppModal
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 10.1, 10.2, 10.3_
-  - [ ] 11.3 Create SettingsComponent
+  - [x] 11.3 Create SettingsComponent
     - Create `src/app/features/admin/settings/settings.component.ts` + `.html` + `.scss`
     - Form fields for lastChoicesCount, calendarEventName, departureTime
     - Placeholder sections for future integrations (Wolt, Outlook, Slack, Uber Eats, Google Maps) — display as disabled cards
     - Save button persists via SettingsRepository
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 10.1, 10.2, 10.3_
-  - [ ] 11.4 Create DashboardComponent
+  - [x] 11.4 Create DashboardComponent
     - Create `src/app/features/admin/dashboard/dashboard.component.ts` + `.html` + `.scss`
     - Display all orders for current round: user name, selected dish, departure status
     - Use AppTable, AppBadge
