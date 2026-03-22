@@ -236,15 +236,15 @@ Build the OfficeLunch Angular application in `/base/`. The implementation procee
     - Verify exactly 7 restaurants with 4 dishes each
     - _Requirements: 9.2, 9.3, 9.4_
 
-- [ ] 13. Wire routing and navigation
-  - [ ] 13.1 Configure app routes with lazy loading
+- [x] 13. Wire routing and navigation
+  - [x] 13.1 Configure app routes with lazy loading
     - Set up routes in `src/app/app.routes.ts`
     - Lazy-load each feature: login, departure, voting, ordering, admin/users, admin/menu, admin/settings, admin/dashboard
     - Apply authGuard to all routes except /login
     - Apply adminGuard to all /admin/* routes
     - Default redirect: unauthenticated → /login, authenticated → /departure
     - _Requirements: 1.4, 3.6, 10.4_
-  - [ ] 13.2 Create AppComponent shell with navigation
+  - [x] 13.2 Create AppComponent shell with navigation
     - Update `src/app/app.component.ts` + `.html` + `.scss`
     - Show nav bar when authenticated: links to Departure, Voting, Ordering
     - Admin nav: additional links to User Management, Menu Management, Settings, Dashboard

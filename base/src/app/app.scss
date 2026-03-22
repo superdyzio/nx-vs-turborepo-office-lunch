@@ -1,0 +1,66 @@
+@use '../styles/variables' as *;
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  height: 52px;
+  background: $color-bg;
+  border-bottom: 1px solid $color-border;
+
+  &__brand {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-base;
+    color: $color-primary;
+    margin-right: 1rem;
+  }
+
+  &__links {
+    display: flex;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  &__link {
+    padding: 0.375rem 0.75rem;
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: $color-bg-subtle;
+      color: $color-text;
+    }
+
+    &--active {
+      background: $color-bg-subtle;
+      color: $color-text;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__logout {
+    margin-left: auto;
+    padding: 0.375rem 0.875rem;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background: transparent;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: $color-danger;
+      color: $color-text-inverse;
+      border-color: $color-danger;
+    }
+  }
+}
+
+.main {
+  padding: $spacing-lg;
+}
