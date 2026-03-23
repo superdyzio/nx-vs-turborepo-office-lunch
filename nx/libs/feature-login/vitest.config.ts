@@ -7,6 +7,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@office-lunch/auth': resolve(__dirname, '../auth/index.ts'),
+      '@office-lunch/data-access': resolve(__dirname, '../data-access/index.ts'),
+      '@office-lunch/shared/models': resolve(__dirname, '../shared/models/index.ts'),
       '@office-lunch/shared/ui': resolve(__dirname, '../shared/ui/index.ts'),
     },
   },
@@ -16,5 +18,13 @@ export default defineConfig({
     root: resolve(__dirname, '.'),
     include: ['src/**/*.spec.ts'],
     setupFiles: ['src/test-setup.ts'],
+  },
+  esbuild: {
+    tsconfigRaw: {
+      compilerOptions: {
+        experimentalDecorators: true,
+        emitDecoratorMetadata: false,
+      },
+    },
   },
 });
