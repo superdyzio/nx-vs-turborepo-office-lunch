@@ -1,0 +1,16 @@
+{
+  "name": "data-access",
+  "projectType": "library",
+  "sourceRoot": "libs/data-access/src",
+  "tags": ["scope:data-access"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": { "lintFilePatterns": ["libs/data-access/**/*.ts"] }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vitest --run --config libs/data-access/vitest.config.ts", "cwd": "{workspaceRoot}" }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "auth",
+  "projectType": "library",
+  "sourceRoot": "libs/auth/src",
+  "tags": ["scope:auth"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": { "lintFilePatterns": ["libs/auth/**/*.ts"] }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vitest --run --config libs/auth/vitest.config.ts", "cwd": "{workspaceRoot}" }
+    }
+  }
+}

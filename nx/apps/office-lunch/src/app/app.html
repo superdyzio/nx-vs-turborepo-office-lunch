@@ -1,0 +1,25 @@
+@if (auth.currentUser()) {
+  <nav class="nav">
+    <div class="nav__brand">OfficeLunch</div>
+    <div class="nav__links">
+      @if (!auth.isAdmin()) {
+        <a routerLink="/departure" routerLinkActive="nav__link--active" class="nav__link">Departure</a>
+      }
+      <a routerLink="/voting" routerLinkActive="nav__link--active" class="nav__link">Voting</a>
+      @if (!auth.isAdmin()) {
+        <a routerLink="/ordering" routerLinkActive="nav__link--active" class="nav__link">Ordering</a>
+      }
+      @if (auth.isAdmin()) {
+        <a routerLink="/admin/users" routerLinkActive="nav__link--active" class="nav__link">Users</a>
+        <a routerLink="/admin/menu" routerLinkActive="nav__link--active" class="nav__link">Menu</a>
+        <a routerLink="/admin/settings" routerLinkActive="nav__link--active" class="nav__link">Settings</a>
+        <a routerLink="/admin/dashboard" routerLinkActive="nav__link--active" class="nav__link">Dashboard</a>
+      }
+    </div>
+    <button class="nav__logout" (click)="logout()">Logout</button>
+  </nav>
+}
+
+<main class="main">
+  <router-outlet />
+</main>

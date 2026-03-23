@@ -1,0 +1,13 @@
+@if (open) {
+  <div class="modal-overlay" (click)="onOverlayClick()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__header">
+        <h3 class="modal__title">{{ title }}</h3>
+        <button class="modal__close" (click)="onClose()" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="modal__body">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+}

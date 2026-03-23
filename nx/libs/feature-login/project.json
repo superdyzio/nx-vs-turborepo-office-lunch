@@ -1,0 +1,16 @@
+{
+  "name": "feature-login",
+  "projectType": "library",
+  "sourceRoot": "libs/feature-login/src",
+  "tags": ["scope:feature"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": { "lintFilePatterns": ["libs/feature-login/**/*.ts"] }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vitest --run --config libs/feature-login/vitest.config.ts", "cwd": "{workspaceRoot}" }
+    }
+  }
+}

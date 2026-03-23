@@ -1,0 +1,39 @@
+@use '../../../../shared/ui/src/styles/variables' as v;
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: v.$color-bg-subtle;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  padding: v.$spacing-xl;
+  background: v.$color-bg;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-md;
+}
+
+.login-title {
+  margin: 0 0 v.$spacing-sm;
+  font-size: v.$font-size-xl;
+  font-weight: v.$font-weight-semibold;
+  text-align: center;
+  color: v.$color-text;
+}
+
+.login-error {
+  margin: 0;
+  padding: v.$spacing-sm v.$spacing-md;
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: v.$radius-sm;
+  color: v.$color-danger;
+  font-size: v.$font-size-sm;
+}

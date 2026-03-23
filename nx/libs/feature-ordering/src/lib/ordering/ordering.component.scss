@@ -1,0 +1,140 @@
+@use '../../../../shared/ui/src/styles/variables' as v;
+
+.ordering-page {
+  max-width: 640px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.ordering-title {
+  font-size: v.$font-size-2xl;
+  font-weight: v.$font-weight-semibold;
+  margin-bottom: v.$spacing-lg;
+  color: v.$color-text;
+}
+
+.no-winner {
+  padding: v.$spacing-lg;
+  background: v.$color-bg-subtle;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+  color: v.$color-text-muted;
+  font-style: italic;
+}
+
+.ordering-content {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-lg;
+}
+
+.winner-banner {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-sm;
+  padding: v.$spacing-md v.$spacing-lg;
+  background: v.$color-bg-subtle;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+}
+
+.winner-name {
+  margin: 0;
+  font-size: v.$font-size-xl;
+  font-weight: v.$font-weight-semibold;
+  color: v.$color-text;
+}
+
+.order-required-notice {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-sm;
+  padding: v.$spacing-md;
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  border-radius: v.$radius-md;
+
+  p {
+    margin: 0;
+    font-size: v.$font-size-sm;
+    color: v.$color-danger;
+  }
+}
+
+.order-confirmed {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-sm;
+  padding: v.$spacing-md;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: v.$radius-md;
+
+  p {
+    margin: 0;
+    font-size: v.$font-size-base;
+    color: v.$color-text;
+  }
+
+  .dish-price {
+    font-size: v.$font-size-sm;
+    color: v.$color-text-muted;
+  }
+}
+
+.dish-list {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-sm;
+}
+
+.dish-list-title {
+  font-size: v.$font-size-base;
+  font-weight: v.$font-weight-medium;
+  color: v.$color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 v.$spacing-xs;
+}
+
+.dish-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: v.$spacing-md;
+  background: v.$color-bg;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+
+  &:hover {
+    border-color: v.$color-primary;
+    background: #eff6ff;
+  }
+
+  &.selected {
+    border-color: v.$color-primary;
+    background: #eff6ff;
+    outline: 2px solid v.$color-primary;
+    outline-offset: -1px;
+  }
+}
+
+.dish-name {
+  font-size: v.$font-size-base;
+  color: v.$color-text;
+  font-weight: v.$font-weight-medium;
+}
+
+.dish-price {
+  font-size: v.$font-size-sm;
+  color: v.$color-text-muted;
+}
+
+.order-actions {
+  display: flex;
+  justify-content: flex-end;
+}

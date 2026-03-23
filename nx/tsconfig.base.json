@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "paths": {
+      "@office-lunch/shared/models": ["libs/shared/models/index.ts"],
+      "@office-lunch/shared/ui": ["libs/shared/ui/index.ts"],
+      "@office-lunch/data-access": ["libs/data-access/index.ts"],
+      "@office-lunch/auth": ["libs/auth/index.ts"],
+      "@office-lunch/util": ["libs/util/index.ts"],
+      "@office-lunch/feature-login": ["libs/feature-login/index.ts"],
+      "@office-lunch/feature-departure": ["libs/feature-departure/index.ts"],
+      "@office-lunch/feature-voting": ["libs/feature-voting/index.ts"],
+      "@office-lunch/feature-ordering": ["libs/feature-ordering/index.ts"],
+      "@office-lunch/feature-admin": ["libs/feature-admin/index.ts"]
+    }
+  }
+}

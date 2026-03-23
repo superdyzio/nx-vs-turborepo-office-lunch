@@ -1,0 +1,16 @@
+{
+  "name": "feature-voting",
+  "projectType": "library",
+  "sourceRoot": "libs/feature-voting/src",
+  "tags": ["scope:feature"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": { "lintFilePatterns": ["libs/feature-voting/**/*.ts"] }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": { "command": "vitest --run --config libs/feature-voting/vitest.config.ts", "cwd": "{workspaceRoot}" }
+    }
+  }
+}

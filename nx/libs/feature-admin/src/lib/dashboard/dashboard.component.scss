@@ -1,0 +1,55 @@
+.dashboard {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.winner-banner {
+  background: #f0faf4;
+  border: 1px solid #b2dfdb;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #2e7d32;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.empty {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.ongoing-section {
+  background: #fafafa;
+  border: 1px dashed #ddd;
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.recent-section {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}

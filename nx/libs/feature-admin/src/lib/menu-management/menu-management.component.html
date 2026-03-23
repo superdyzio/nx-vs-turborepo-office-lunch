@@ -1,0 +1,79 @@
+<div class="menu-management">
+  <h2 class="page-title">Menu Management</h2>
+
+  <!-- Add Restaurant Form -->
+  <section class="section">
+    <h3 class="section-title">Add Restaurant</h3>
+    <div class="add-form">
+      <app-input label="Restaurant Name" placeholder="Enter name" [(ngModel)]="newRestaurantNameValue" />
+      @if (addRestaurantError()) {
+        <p class="error-msg">{{ addRestaurantError() }}</p>
+      }
+      <app-button label="Add Restaurant" variant="primary" (clicked)="addRestaurant()" />
+    </div>
+  </section>
+
+  <!-- Restaurants List -->
+  <section class="section">
+    <h3 class="section-title">Restaurants</h3>
+    @if (restaurants().length === 0) {
+      <p class="empty">No restaurants yet.</p>
+    }
+    <div class="restaurants-grid">
+      @for (restaurant of restaurants(); track restaurant.id) {
+        <app-card [title]="restaurant.name">
+          <div class="restaurant-header">
+            <app-badge
+              [text]="restaurant.isDisabled ? 'Disabled' : 'Enabled'"
+              [color]="restaurant.isDisabled ? 'red' : 'green'"
+            />
+            <div class="restaurant-actions">
+              <app-button
+                [label]="restaurant.isDisabled ? 'Enable' : 'Disable'"
+                variant="secondary"
+                (clicked)="toggleDisabled(restaurant)"
+              />
+              <app-button label="Add Dish" variant="primary" (clicked)="openAddDish(restaurant)" />
+              <app-button label="Remove" variant="danger" (clicked)="openRemove(restaurant)" />
+            </div>
+          </div>
+
+          <div class="dishes">
+            @if (restaurant.dishes.length === 0) {
+              <p class="dishes__empty">No dishes yet.</p>
+            }
+            @for (dish of restaurant.dishes; track dish.id) {
+              <div class="dish-item">{{ formatDish(dish) }}</div>
+            }
+          </div>
+        </app-card>
+      }
+    </div>
+  </section>
+</div>
+
+<!-- Add Dish Modal -->
+<app-modal [open]="addDishModalOpen()" [title]="'Add Dish to ' + (targetRestaurant()?.name ?? '')" (closed)="closeAddDish()">
+  <div class="modal-form">
+    <app-input label="Dish Name" placeholder="Enter dish name" [(ngModel)]="newDishNameValue" />
+    <app-input label="Price (optional)" type="number" placeholder="e.g. 9.90" [(ngModel)]="newDishPriceValue" />
+    @if (addDishError()) {
+      <p class="error-msg">{{ addDishError() }}</p>
+    }
+    <div class="modal-actions">
+      <app-button label="Add Dish" variant="primary" (clicked)="saveAddDish()" />
+      <app-button label="Cancel" variant="secondary" (clicked)="closeAddDish()" />
+    </div>
+  </div>
+</app-modal>
+
+<!-- Remove Confirmation Modal -->
+<app-modal [open]="removeModalOpen()" title="Confirm Remove" (closed)="cancelRemove()">
+  <div class="modal-form">
+    <p>Remove restaurant <strong>{{ removingRestaurant()?.name }}</strong> and all its dishes?</p>
+    <div class="modal-actions">
+      <app-button label="Remove" variant="danger" (clicked)="confirmRemove()" />
+      <app-button label="Cancel" variant="secondary" (clicked)="cancelRemove()" />
+    </div>
+  </div>
+</app-modal>
