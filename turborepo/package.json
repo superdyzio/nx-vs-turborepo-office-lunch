@@ -1,7 +1,12 @@
 {
   "name": "office-lunch-turborepo",
   "private": true,
-  "workspaces": ["apps/*", "packages/*"],
+  "type": "module",
+  "packageManager": "npm@10.9.3",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo build",
     "test": "turbo test",
@@ -9,6 +14,12 @@
     "dev": "turbo dev --filter=office-lunch"
   },
   "devDependencies": {
+    "@angular-eslint/eslint-plugin": "^21.3.1",
+    "@angular-eslint/eslint-plugin-template": "^21.3.1",
+    "@angular-eslint/template-parser": "^21.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "eslint": "^10.1.0",
     "turbo": "latest"
   }
 }
