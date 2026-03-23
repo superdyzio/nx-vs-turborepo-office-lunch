@@ -13,7 +13,10 @@
         "tsConfig": "apps/office-lunch/tsconfig.app.json",
         "assets": [{ "glob": "**/*", "input": "apps/office-lunch/public" }],
         "styles": ["apps/office-lunch/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "stylePreprocessorOptions": {
+          "includePaths": ["."]
+        }
       }
     },
     "serve": {
