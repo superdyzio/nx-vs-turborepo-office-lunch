@@ -126,6 +126,6 @@ export class MenuManagementComponent implements OnInit {
   }
 
   formatDish(dish: Dish): string {
-    return !!dish.price ? `${dish.name} — €${dish.price.toFixed(2)}` : dish.name;
+    return dish.price ? `${dish.name} — €${dish.price.toFixed(2)}` : dish.name;
   }
 }

@@ -108,7 +108,7 @@ const NX_ROOT = path.resolve(__dirname, '../../../..');
 describe('Property 2: All base source files have a migrated equivalent (full workspace)', () => {
   it('every base source file has a corresponding file in the nx workspace', () => {
     fc.assert(
-      fc.property(fc.constantFrom(...FILE_MAP), ([_basePath, nxPath]) => {
+      fc.property(fc.constantFrom(...FILE_MAP), ([, nxPath]) => {
         const fullPath = path.join(NX_ROOT, nxPath);
         return existsSync(fullPath);
       }),

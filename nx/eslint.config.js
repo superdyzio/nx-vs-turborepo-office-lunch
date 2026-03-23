@@ -3,6 +3,9 @@ const nxPlugin = require('@nx/eslint-plugin');
 module.exports = [
   ...nxPlugin.configs['flat/typescript'],
   {
+    ignores: ['**/vitest.config.ts', '**/vitest.workspace.ts'],
+  },
+  {
     plugins: {
       '@nx': nxPlugin,
     },

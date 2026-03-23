@@ -22,9 +22,6 @@ function collectTsFiles(dir: string): string[] {
 const SRC_ROOT = path.resolve(__dirname, '../../src');
 const tsFiles = collectTsFiles(SRC_ROOT);
 
-// Matches relative imports that look like model files (e.g. ../../models/user.model)
-const RELATIVE_MODEL_IMPORT = /from\s+['"][^'"]*models[^'"]*['"]/g;
-
 describe('Property 3: Data-access imports models only from @office-lunch/shared/models', () => {
   it('no file imports models via a relative path', () => {
     fc.assert(

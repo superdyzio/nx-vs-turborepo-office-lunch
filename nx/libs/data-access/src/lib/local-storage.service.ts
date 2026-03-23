@@ -21,7 +21,8 @@ export class LocalStorageService {
     } catch (err) {
       if (err instanceof DOMException && err.name === 'QuotaExceededError') {
         throw new Error(
-          'Storage quota exceeded. Please clear your browser data and try again.'
+          'Storage quota exceeded. Please clear your browser data and try again.',
+          { cause: err }
         );
       }
       throw err;
