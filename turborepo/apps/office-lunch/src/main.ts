@@ -3,7 +3,7 @@ import { appConfig } from './app/app.config';
 import { App } from './app/app';
 import { initDb } from '@office-lunch/util';
 
-(window as Window & { __initDb: typeof initDb }).__initDb = initDb;
+(window as unknown as { __initDb: typeof initDb }).__initDb = initDb;
 
 bootstrapApplication(App, appConfig)
   .catch((err) => console.error(err));
