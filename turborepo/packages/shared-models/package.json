@@ -1,0 +1,9 @@
+{
+  "name": "@office-lunch/shared-models",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint src --ext .ts",
+    "test": "vitest --run --config vitest.config.ts"
+  }
+}

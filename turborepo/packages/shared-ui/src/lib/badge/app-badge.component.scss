@@ -1,0 +1,26 @@
+@use '../../styles/variables' as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px $spacing-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-sm;
+  white-space: nowrap;
+
+  &--green {
+    background-color: $color-badge-green-bg;
+    color: $color-badge-green-text;
+  }
+
+  &--red {
+    background-color: $color-badge-red-bg;
+    color: $color-badge-red-text;
+  }
+
+  &--gray {
+    background-color: $color-badge-gray-bg;
+    color: $color-badge-gray-text;
+  }
+}

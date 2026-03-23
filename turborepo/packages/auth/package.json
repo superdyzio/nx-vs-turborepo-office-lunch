@@ -1,0 +1,10 @@
+{
+  "name": "@office-lunch/auth",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test": "vitest --run --config vitest.config.ts",
+    "lint": "eslint src --ext .ts,.html"
+  }
+}

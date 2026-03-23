@@ -1,0 +1,46 @@
+<div class="settings">
+  <h2 class="page-title">Settings</h2>
+
+  <!-- General Settings -->
+  <section class="section">
+    <app-card title="General">
+      <div class="form-fields">
+        <app-input
+          label="Last Choices Count"
+          type="number"
+          placeholder="5"
+          [(ngModel)]="lastChoicesCountValue"
+        />
+        <app-input
+          label="Calendar Event Name"
+          placeholder="Office Lunch"
+          [(ngModel)]="calendarEventNameValue"
+        />
+        <app-input
+          label="Departure Time (HH:mm)"
+          type="time"
+          [(ngModel)]="departureTimeValue"
+        />
+      </div>
+      <div class="save-row">
+        <app-button label="Save Settings" variant="primary" (clicked)="save()" />
+        @if (saveSuccess()) {
+          <span class="save-success">Settings saved.</span>
+        }
+      </div>
+    </app-card>
+  </section>
+
+  <!-- Future Integrations -->
+  <section class="section">
+    <h3 class="section-title">Integrations (Coming Soon)</h3>
+    <div class="integrations-grid">
+      @for (integration of integrations; track integration.name) {
+        <app-card [title]="integration.name">
+          <p class="integration-desc">{{ integration.description }}</p>
+          <app-button label="Configure" variant="secondary" [disabled]="true" />
+        </app-card>
+      }
+    </div>
+  </section>
+</div>

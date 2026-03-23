@@ -1,0 +1,14 @@
+{
+  "name": "office-lunch-turborepo",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "build": "turbo build",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "dev": "turbo dev --filter=office-lunch"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  }
+}

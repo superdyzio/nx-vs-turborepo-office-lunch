@@ -1,0 +1,90 @@
+<div class="user-management">
+  <h2 class="page-title">User Management</h2>
+
+  <!-- Add User Form -->
+  <section class="section">
+    <h3 class="section-title">Add User</h3>
+    <div class="add-form">
+      <app-input label="Username" placeholder="Enter username" [(ngModel)]="newUsernameValue" />
+      @if (addError()) {
+        <p class="error-msg">{{ addError() }}</p>
+      }
+      <app-button label="Add User" variant="primary" (clicked)="addUser()" />
+    </div>
+  </section>
+
+  <!-- Users Table -->
+  <section class="section">
+    <h3 class="section-title">All Users</h3>
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users(); track user.id) {
+            <tr class="table__row">
+              <td>{{ user.username }}</td>
+              <td>
+                <app-badge [text]="getBadgeText(user)" [color]="getBadgeColor(user)" />
+              </td>
+              <td class="actions">
+                <app-button label="Edit" variant="secondary" (clicked)="openEdit(user)" />
+                <app-button
+                  [label]="user.isDisabled ? 'Enable' : 'Disable'"
+                  variant="secondary"
+                  [disabled]="isSelf(user)"
+                  (clicked)="toggleDisabled(user)"
+                />
+                <app-button
+                  label="Remove"
+                  variant="danger"
+                  [disabled]="isSelf(user)"
+                  (clicked)="openRemove(user)"
+                />
+              </td>
+            </tr>
+          }
+          @if (users().length === 0) {
+            <tr>
+              <td colspan="3" class="empty">No users found.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<!-- Edit User Modal -->
+<app-modal [open]="editModalOpen()" title="Edit User" (closed)="closeEdit()">
+  <div class="modal-form">
+    <app-input label="Username" placeholder="Username" [(ngModel)]="editUsernameValue" />
+    <label class="checkbox-label">
+      <input type="checkbox" [(ngModel)]="editIsAdminValue" />
+      Admin
+    </label>
+    @if (editError()) {
+      <p class="error-msg">{{ editError() }}</p>
+    }
+    <div class="modal-actions">
+      <app-button label="Save" variant="primary" (clicked)="saveEdit()" />
+      <app-button label="Cancel" variant="secondary" (clicked)="closeEdit()" />
+    </div>
+  </div>
+</app-modal>
+
+<!-- Remove Confirmation Modal -->
+<app-modal [open]="removeModalOpen()" title="Confirm Remove" (closed)="cancelRemove()">
+  <div class="modal-form">
+    <p>Are you sure you want to remove <strong>{{ removingUser()?.username }}</strong>?</p>
+    <div class="modal-actions">
+      <app-button label="Remove" variant="danger" (clicked)="confirmRemove()" />
+      <app-button label="Cancel" variant="secondary" (clicked)="cancelRemove()" />
+    </div>
+  </div>
+</app-modal>

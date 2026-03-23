@@ -1,0 +1,25 @@
+<div class="table-wrapper">
+  <table class="table">
+    <thead>
+      <tr>
+        @for (col of columns; track col.key) {
+          <th class="table__th">{{ col.label }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of rows; track $index) {
+        <tr class="table__row">
+          @for (col of columns; track col.key) {
+            <td class="table__td">{{ getCellValue(row, col.key) }}</td>
+          }
+        </tr>
+      }
+      @if (rows.length === 0) {
+        <tr>
+          <td [attr.colspan]="columns.length" class="table__empty">No data available</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

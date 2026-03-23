@@ -1,0 +1,67 @@
+@use '../../../../shared-ui/src/styles/variables' as v;
+
+.departure-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: v.$color-bg-subtle;
+}
+
+.departure-card {
+  width: 100%;
+  max-width: 420px;
+  padding: v.$spacing-xl;
+  background: v.$color-bg;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-md;
+}
+
+.departure-title {
+  margin: 0 0 v.$spacing-sm;
+  font-size: v.$font-size-xl;
+  font-weight: v.$font-weight-semibold;
+  text-align: center;
+  color: v.$color-text;
+}
+
+.departure-question {
+  margin: 0;
+  font-size: v.$font-size-lg;
+  text-align: center;
+  color: v.$color-text;
+}
+
+.departure-actions {
+  display: flex;
+  gap: v.$spacing-md;
+  justify-content: center;
+}
+
+.departure-alternative {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-md;
+}
+
+.departure-alt-label {
+  margin: 0;
+  font-size: v.$font-size-base;
+  color: v.$color-text-muted;
+}
+
+.departure-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-md;
+  align-items: center;
+}
+
+.departure-confirm-text {
+  margin: 0;
+  font-size: v.$font-size-base;
+  color: v.$color-text-muted;
+}

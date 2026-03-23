@@ -1,0 +1,126 @@
+<div class="voting-page">
+  <h1 class="voting-title">Voting</h1>
+
+  <!-- Result display -->
+  @if (result()?.consensusReached === true) {
+    <div class="result-section result-winner">
+      <app-badge text="Winner" color="green" />
+      <p class="winner-name">{{ winnerName() }}</p>
+    </div>
+  }
+  @if (result() !== null && result()?.consensusReached === false) {
+    <div class="result-section result-no-consensus">
+      <app-badge text="No Consensus" color="red" />
+      <p class="no-consensus-msg">Consensus not reached.</p>
+      <p class="veto-users">{{ result()!.vetoUsers.join(', ') }}</p>
+    </div>
+  }
+
+  <!-- Admin view -->
+  @if (isAdmin()) {
+    <div class="admin-voting">
+      @if (!roundActive()) {
+        <app-button label="Start Voting Round" variant="primary" (clicked)="startRound()" />
+      } @else {
+        <p class="vote-count">Votes submitted: {{ voteCount() }}</p>
+        <app-button label="End Voting" variant="danger" (clicked)="endRound()" />
+      }
+    </div>
+  }
+
+  <!-- Regular user view -->
+  @if (!isAdmin()) {
+
+    <!-- Last choices -->
+    @if (lastChoiceNames().length > 0) {
+      <div class="last-choices">
+        <h3 class="last-choices-title">Recent Choices</h3>
+        <ol class="last-choices-list">
+          @for (name of lastChoiceNames(); track name) {
+            <li>{{ name }}</li>
+          }
+        </ol>
+      </div>
+    }
+
+    <!-- No active round -->
+    @if (!roundActive()) {
+      <p class="waiting-msg">No active voting round. Waiting for admin to start one.</p>
+    }
+
+    <!-- Active round -->
+    @if (roundActive()) {
+      <div class="active-round">
+
+        <!-- Already voted -->
+        @if (hasVoted()) {
+          <div class="voted-notice">
+            <app-badge text="Vote submitted" color="green" />
+            <p>Your vote has been recorded. Waiting for the round to end.</p>
+          </div>
+        }
+
+        <!-- Voting form -->
+        @if (!hasVoted()) {
+          <form class="vote-form" (ngSubmit)="submitVote()">
+            <p class="vote-instructions">Assign 3, 2, and 1 points to three different restaurants.</p>
+
+            <div class="vote-row">
+              <label class="vote-label">3 points</label>
+              <select class="vote-select" [ngModel]="pick3()" (ngModelChange)="pick3.set($event); clearVetoIfPicked($event)" name="pick3">
+                <option value="">— select —</option>
+                @for (r of pick3Options(); track r.id) {
+                  <option [value]="r.id">{{ r.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="vote-row">
+              <label class="vote-label">2 points</label>
+              <select class="vote-select" [ngModel]="pick2()" (ngModelChange)="pick2.set($event); clearVetoIfPicked($event)" name="pick2">
+                <option value="">— select —</option>
+                @for (r of pick2Options(); track r.id) {
+                  <option [value]="r.id">{{ r.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="vote-row">
+              <label class="vote-label">1 point</label>
+              <select class="vote-select" [ngModel]="pick1()" (ngModelChange)="pick1.set($event); clearVetoIfPicked($event)" name="pick1">
+                <option value="">— select —</option>
+                @for (r of pick1Options(); track r.id) {
+                  <option [value]="r.id">{{ r.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="vote-row">
+              <label class="vote-label">Veto (optional)</label>
+              <select class="vote-select" [ngModel]="vetoId()" (ngModelChange)="vetoId.set($event)" name="veto">
+                <option value="">— none —</option>
+                @for (r of vetoableRestaurants(); track r.id) {
+                  <option [value]="r.id">{{ r.name }}</option>
+                }
+              </select>
+            </div>
+
+            @if (voteError()) {
+              <p class="vote-error">{{ voteError() }}</p>
+            }
+
+            <div class="vote-row">
+              <span class="vote-label"></span>
+              <app-button
+                label="Submit Vote"
+                variant="primary"
+                [disabled]="!canSubmitVote()"
+                (clicked)="submitVote()"
+              />
+            </div>
+          </form>
+        }
+      </div>
+    }
+  }
+</div>

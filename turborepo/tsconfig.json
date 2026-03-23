@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@office-lunch/shared-models": ["packages/shared-models/index.ts"],
+      "@office-lunch/shared-ui": ["packages/shared-ui/index.ts"],
+      "@office-lunch/data-access": ["packages/data-access/index.ts"],
+      "@office-lunch/auth": ["packages/auth/index.ts"],
+      "@office-lunch/util": ["packages/util/index.ts"],
+      "@office-lunch/feature-login": ["packages/feature-login/index.ts"],
+      "@office-lunch/feature-departure": ["packages/feature-departure/index.ts"],
+      "@office-lunch/feature-voting": ["packages/feature-voting/index.ts"],
+      "@office-lunch/feature-ordering": ["packages/feature-ordering/index.ts"],
+      "@office-lunch/feature-admin": ["packages/feature-admin/index.ts"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

@@ -1,0 +1,176 @@
+.voting-page {
+  max-width: 640px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.voting-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
+}
+
+// Last choices
+.last-choices {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.last-choices-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.last-choices-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #444;
+  font-size: 0.95rem;
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+}
+
+// Result
+.result-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.result-winner,
+.result-no-consensus {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.winner-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.no-consensus-msg,
+.veto-users {
+  margin: 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+// No round
+.no-round {
+  margin-bottom: 1.5rem;
+}
+
+.waiting-msg {
+  color: #666;
+  font-style: italic;
+}
+
+// Active round
+.active-round {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.voted-notice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f0faf0;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+
+  p {
+    margin: 0;
+    color: #2d6a4f;
+    font-size: 0.95rem;
+  }
+}
+
+// Vote form
+.vote-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.vote-instructions {
+  margin: 0 0 0.5rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.vote-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.vote-label {
+  width: 80px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.vote-select {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: #fff;
+  color: #333;
+
+  &:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+}
+
+.vote-error {
+  color: #c0392b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+// Admin actions
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+// Admin voting
+.admin-voting {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.vote-count {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+}
