@@ -27,4 +27,4 @@ yarn-error.log*
 Thumbs.db
 
 # Angular cache
-.angular/cache
+apps/office-lunch/.angular/cache
